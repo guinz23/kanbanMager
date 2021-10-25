@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using kanbanApi.UnitOfWorks;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,40 +9,21 @@ using System.Threading.Tasks;
 
 namespace kanbanApi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [Route("v1/project")]
     public class ProjectController : ControllerBase
     {
-        // GET: api/<ProjectController>
+        private readonly IUnitOfWork _unitOfWork;
+        public ProjectController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("getAllProject")]
+        [Authorize]
+        public IActionResult InfoApp()
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<ProjectController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<ProjectController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<ProjectController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ProjectController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return Ok("Api Kanban Version 1.1");
         }
     }
 }

@@ -61,8 +61,8 @@ namespace kanbanApi.Controllers
         {
             IEnumerable<User> users = _unitOfWork.Users.Find(x => x.Email == user.Email && x.Password == MD5Encrypted.GetMd5Hash(user.Password));
             User userTemp = users.FirstOrDefault();
-            userTemp.IdPositionNavigation = _unitOfWork.Positions.GetById(Guid.Parse(userTemp.IdPosition.ToString()));
-            userTemp.IdUserTypeNavigation = _unitOfWork.UserTypes.GetById(Guid.Parse(userTemp.IdUserType.ToString()));
+            userTemp.IdPositionNavigation = _unitOfWork.Positions.GetById(userTemp.IdPosition);
+            userTemp.IdUserTypeNavigation = _unitOfWork.UserTypes.GetById(userTemp.IdUserType);
             return TokenService.GenerateToken(userTemp);
             
         }
@@ -93,5 +93,17 @@ namespace kanbanApi.Controllers
 
             return new ObjectResult(message) { StatusCode = statusCode };
         }
+
+        [HttpGet]
+        [Route("userAuthenticated")]
+        [Authorize]
+        public IActionResult UserAuthenticated([FromBody] User u)
+        {
+            var user = _unitOfWork.Users.GetById(u.Id);
+            user.IdPositionNavigation = _unitOfWork.Positions.GetById(user.IdPosition);
+            user.IdUserTypeNavigation = _unitOfWork.UserTypes.GetById(user.IdUserType);
+            return Ok(user);
+        }
+       
     }
 }

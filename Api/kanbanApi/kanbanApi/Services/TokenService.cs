@@ -19,6 +19,7 @@ namespace kanbanApi.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.Name.ToString()),
+                    new Claim(ClaimTypes.Email, user.Email.ToString()),
                     new Claim(ClaimTypes.Role, user.IdUserTypeNavigation.Type.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),
