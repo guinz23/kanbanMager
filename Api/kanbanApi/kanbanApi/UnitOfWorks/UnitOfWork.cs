@@ -19,6 +19,7 @@ namespace kanbanApi.UnitOfWorks
             Positions = new PositionRepository(_context);
             UserTypes = new UserTypeRepository(_context);
             Companies = new CompanyRepository(_context);
+            Projects = new ProjectRepository(_context);
         }
         public IUserRepository Users { get; private set; }
 
@@ -27,6 +28,8 @@ namespace kanbanApi.UnitOfWorks
         public IUserTypeRepository UserTypes { get; private set; }
 
         public ICompanyRepository Companies { get; private set; }
+
+        public IProjectRepository Projects { get; private set; }
 
         public int Complete()
         {

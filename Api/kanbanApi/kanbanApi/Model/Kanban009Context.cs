@@ -87,6 +87,11 @@ namespace kanbanApi.Model
 
                 entity.Property(e => e.StartDate).HasColumnType("date");
 
+                entity.Property(e => e.State)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('A')");
+
                 entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 0)");
 
                 entity.HasOne(d => d.IdCompanyNavigation)
