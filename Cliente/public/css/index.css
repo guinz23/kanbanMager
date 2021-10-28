@@ -1,0 +1,46 @@
+body {
+    background-image: url(../assets/Background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#cardlogin {
+    background-color: transparent;
+    border: none;
+}
+
+.div-img1 {
+    margin-top: 2%;
+}
+
+#img-nameapp {
+    width: 100%;
+    height: 300px;
+}
+
+.div-img2 {
+    margin-top: 2%;
+}
+
+#img-nameapp1 {
+    width: 70%;
+    height: 100px;
+}
+
+.div-form {
+    margin-top: 10%;
+}
+
+.btn {
+    flex: 1 1 auto;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    border-radius: 10px;
+   }
+   .btn-3 {
+    background-image: linear-gradient(to right, #84fab0 0%, #94579E 51%, #18E5A7 100%);
+  }
+  
