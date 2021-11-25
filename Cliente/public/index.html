@@ -10,6 +10,7 @@
   integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src="https://kit.fontawesome.com/aa65253b05.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="./css/Toast.min.css">
 <link rel="stylesheet" href="./css/index.css">
 <link rel="stylesheet" href="./css/progress.css">
@@ -22,7 +23,7 @@
             <div class="card-body">
               <h5 class="card-title text-white">Inicio de Sesión</h5>
               <h6>
-                <p class="text-white">¿Eres nuevo Usuario?<a href=""> <strong style="color:#08A195;"> Crear una
+                <p class="text-white">¿Eres nuevo Usuario?<a class="create-account" href="javascript:void(0)"> <strong style="color:#08A195;"> Crear una
                       cuenta</strong></a></p>
               </h6>
               <form id="form-login">
@@ -38,7 +39,10 @@
               <div class="d-grid gap-2 col-12 mx-auto pt-4">
                 <button id="btn-submit-login" type="button" class="btn btn-3"> Iniciar Sesión</button>
               </div>  
-              <div class="d-flex justify-content-center pt-4">
+              <div class="d-flex justify-content-center pt-2">
+                <p><a class="reset-password" href="javascript:void(0)"> <strong style="color:#08A195;"> Olvide la Contraseña</strong></a></p>
+              </div>
+              <div class="d-flex justify-content-center pt-2">
                 <h4 class="text-white">
                   ______ Contactanos ______
                 </h4>
@@ -61,13 +65,13 @@
         <div>
           <div class="div-img1">
             <div class="p-5 d-flex justify-content-center">
-              <img id="img-nameapp" src="assets/Kanban Logo.png">
+              <img id="img-nameapp" src="assets/KanbanLogo.png">
             </div>
           </div>
         </div>
         <div class="div-img2">
           <div class="p-5 d-flex justify-content-center">
-            <img id="img-nameapp1" src="assets/AacromLogo.png">
+            <img id="img-nameapp1" src="assets/LogoAacrom.png">
           </div>
         </div>
       </div>
@@ -79,15 +83,14 @@
             <div class="modal-body">
                 <div class="text-center">
                     <img src="assets/loading.gif" class="icon" />
-                    <h5><span class="modal-text">Autenticando, Espere por favor... </span></h5>
+                    <h5><span class="modal-text">Enviando solicitud, Espere por favor... </span></h5>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script src="./js/modules/Session.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="./js/modules/routing.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
     integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
     crossorigin="anonymous"></script>

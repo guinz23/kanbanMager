@@ -20,6 +20,7 @@ namespace kanbanApi.Model
         public decimal TotalAmount { get; set; }
         public Guid IdCompany { get; set; }
         public string State { get; set; }
+        public string Descripción { get; set; }
 
         public virtual Company IdCompanyNavigation { get; set; }
         public virtual ICollection<Task> Tasks { get; set; }

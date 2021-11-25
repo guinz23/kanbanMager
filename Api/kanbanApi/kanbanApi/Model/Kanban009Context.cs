@@ -69,10 +69,6 @@ namespace kanbanApi.Model
                 entity.ToTable("Priority");
 
                 entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(1);
             });
 
             modelBuilder.Entity<Project>(entity =>
@@ -82,6 +78,10 @@ namespace kanbanApi.Model
                 entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.DeliveryDate).HasColumnType("date");
+
+                entity.Property(e => e.Descripción)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Name).IsRequired();
 
@@ -112,6 +112,10 @@ namespace kanbanApi.Model
                 entity.Property(e => e.DeliveryDate).HasColumnType("date");
 
                 entity.Property(e => e.Description).IsRequired();
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.StartDate).HasColumnType("date");
 

@@ -66,3 +66,7 @@ C:\Users\nelso\Documentos\Joel Proyecto\Api\kanbanApi\kanbanApi\bin\Debug\netcor
 C:\Users\nelso\Documentos\Joel Proyecto\Api\kanbanApi\kanbanApi\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\nelso\Documentos\Joel Proyecto\Api\kanbanApi\kanbanApi\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 C:\Users\nelso\Documentos\Joel Proyecto\Api\kanbanApi\kanbanApi\obj\Debug\netcoreapp3.1\kanbanApi.csproj.AssemblyReference.cache
+C:\Users\nelso\Documentos\Joel Proyecto\Api\kanbanApi\kanbanApi\bin\Debug\netcoreapp3.1\MailKit.dll
+C:\Users\nelso\Documentos\Joel Proyecto\Api\kanbanApi\kanbanApi\bin\Debug\netcoreapp3.1\MimeKit.dll
+C:\Users\nelso\Documentos\Joel Proyecto\Api\kanbanApi\kanbanApi\bin\Debug\netcoreapp3.1\NETCore.MailKit.dll
+C:\Users\nelso\Documentos\Joel Proyecto\Api\kanbanApi\kanbanApi\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll

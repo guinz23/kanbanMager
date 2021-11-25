@@ -66,3 +66,7 @@ C:\Users\nelso\Documentos\Joel Proyecto\Api\kanbanApi\kanbanApi\obj\Release\netc
 C:\Users\nelso\Documentos\Joel Proyecto\Api\kanbanApi\kanbanApi\obj\Release\netcoreapp3.1\kanbanApi.dll
 C:\Users\nelso\Documentos\Joel Proyecto\Api\kanbanApi\kanbanApi\obj\Release\netcoreapp3.1\kanbanApi.pdb
 C:\Users\nelso\Documentos\Joel Proyecto\Api\kanbanApi\kanbanApi\obj\Release\netcoreapp3.1\kanbanApi.genruntimeconfig.cache
+C:\Users\nelso\Documentos\Joel Proyecto\Api\kanbanApi\kanbanApi\bin\Release\netcoreapp3.1\MailKit.dll
+C:\Users\nelso\Documentos\Joel Proyecto\Api\kanbanApi\kanbanApi\bin\Release\netcoreapp3.1\MimeKit.dll
+C:\Users\nelso\Documentos\Joel Proyecto\Api\kanbanApi\kanbanApi\bin\Release\netcoreapp3.1\NETCore.MailKit.dll
+C:\Users\nelso\Documentos\Joel Proyecto\Api\kanbanApi\kanbanApi\bin\Release\netcoreapp3.1\BouncyCastle.Crypto.dll

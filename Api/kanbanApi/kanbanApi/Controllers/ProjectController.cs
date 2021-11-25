@@ -1,4 +1,5 @@
 ﻿using kanbanApi.Model;
+using kanbanApi.Model.ViewModels;
 using kanbanApi.UnitOfWorks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -61,7 +62,7 @@ namespace kanbanApi.Controllers
                 {
                     _unitOfWork.Projects.Add(project);
                     _unitOfWork.Complete();
-                    mensage = "Se a creado un projecto con exito";
+                    mensage = "Se a creado un projecto con exito ";
                     statusCode = 200;
                 }
             }
@@ -109,6 +110,37 @@ namespace kanbanApi.Controllers
             var mensage = "Se elimino un projecto correctamente";
             var statusCode = 200;
             return new ObjectResult(mensage) { StatusCode = statusCode };
+        }
+
+        [HttpPost]
+        [Route("usersOnProject")]
+        [Authorize]
+        public async Task<IActionResult> UsersOnProject([FromBody] Project project)
+        {
+            var mensage = "";
+            int statusCode = 400;
+            List<UserOnProjectViewModel> usersOnProjects = new List<UserOnProjectViewModel>();
+      
+            if (!User.IsInRole("manager"))
+            {
+                mensage = "No tiene los permisos para ejecutar esta accion";
+                statusCode = 403;
+            }
+            else
+            {
+                var result = _unitOfWork.UserOnProjects.Find(x=>x.IdProject==project.Id);
+                
+                foreach(var user in result)
+                {
+                    var userTemp = _unitOfWork.Users.GetById(user.IdUser);
+                    UserOnProjectViewModel userOnProjectViewModel = new UserOnProjectViewModel();
+                    userOnProjectViewModel.Id = userTemp.Id;
+                    userOnProjectViewModel.Name = userTemp.Name;
+                    usersOnProjects.Add(userOnProjectViewModel);
+                }
+                statusCode = 200;
+            }
+            return new ObjectResult(usersOnProjects) { StatusCode = statusCode };
         }
     }
 }

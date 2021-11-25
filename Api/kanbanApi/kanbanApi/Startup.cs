@@ -1,6 +1,7 @@
 using kanbanApi.Model;
 using kanbanApi.Repositories.IRepository;
 using kanbanApi.Repositories.Repository;
+using kanbanApi.Services;
 using kanbanApi.UnitOfWorks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -61,7 +62,8 @@ namespace kanbanApi
             services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-           
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.AddTransient<IMailService, Services.MailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

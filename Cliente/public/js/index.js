@@ -23,7 +23,7 @@ function login(httpRequest, modal, session) {
         });
     } else {
         let user = JSON.stringify({ "email": email, "password": password });
-        const promise1 = Promise.resolve(httpRequest.post("POST", "login/authenticate", user));
+        const promise1 = Promise.resolve(httpRequest.post("POST", "login/authenticate", user,false));
         promise1.then((value) => {
             session.setSession(value);
             setTimeout(function () {
@@ -32,7 +32,7 @@ function login(httpRequest, modal, session) {
             }, 1000);
         });
     }
-}
+}       
 
 function register() {
 

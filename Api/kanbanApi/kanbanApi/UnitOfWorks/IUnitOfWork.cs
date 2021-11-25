@@ -13,6 +13,9 @@ namespace kanbanApi.UnitOfWorks
         IUserTypeRepository UserTypes { get; }
         ICompanyRepository Companies { get; }
         IProjectRepository Projects { get; }
-       int Complete();
+        IUserOnProjectRepository UserOnProjects { get; }
+        IPriorityRepository Prioritys { get; }
+        ITaskRepository Tasks { get; }
+        int Complete();
     }
 }

@@ -19,15 +19,17 @@ namespace kanbanApi.Controllers
     public class LoginController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        public LoginController(IUnitOfWork unitOfWork)
+        private readonly IMailService mailService;
+        public LoginController(IUnitOfWork unitOfWork, IMailService mailService)
         {
             _unitOfWork = unitOfWork;
+            this.mailService = mailService;
         }
 
         [HttpGet]
         [Route("apiInfo")]
         [AllowAnonymous]
-         public IActionResult  InfoApp()
+        public IActionResult InfoApp()
         {
             return Ok("Api Kanban Version 1.1");
         }
@@ -39,7 +41,7 @@ namespace kanbanApi.Controllers
         {
             string message = "";
             int statusCode = 404;
-            if (user.Email == null && user.Email == "" || user.Password == null || user.Password == "" || user.Name == null || user.Name == "" || user.LastName == null || user.LastName == "" || user.IdPosition == null || user.IdPosition.ToString() =="")
+            if (user.Email == null && user.Email == "" || user.Password == null || user.Password == "" || user.Name == null || user.Name == "" || user.LastName == null || user.LastName == "" || user.IdPosition == null || user.IdPosition.ToString() == "")
             {
                 message = "Error al procesar el registro por favor ingresar todos los datos";
             }
@@ -64,7 +66,7 @@ namespace kanbanApi.Controllers
             userTemp.IdPositionNavigation = _unitOfWork.Positions.GetById(userTemp.IdPosition);
             userTemp.IdUserTypeNavigation = _unitOfWork.UserTypes.GetById(userTemp.IdUserType);
             return TokenService.GenerateToken(userTemp);
-            
+
         }
 
         [HttpPost]
@@ -78,20 +80,49 @@ namespace kanbanApi.Controllers
             if (users.Count() > 0)
             {
                 User userTemp = users.FirstOrDefault();
-                userTemp.Password = MD5Encrypted.GetMd5Hash(user.Password);
+                var passwordTemp = GenerateNewPassword();
+                await mailService.SendEmailAsync(new Mail { ToEmail = user.Email, Subject = "Cambio de contraseña", Body = Template(userTemp,passwordTemp)});
+                userTemp.Password = MD5Encrypted.GetMd5Hash(passwordTemp);
                 _unitOfWork.Users.Update(userTemp);
                 _unitOfWork.Complete();
-                 message = "Se  actualizo la contraseña con exito ";
-                 statusCode = 200;
+                message = "Se  actualizo la contraseña con exito ";
+                statusCode = 200;
             }
             else
             {
                 message = "El correo ingresado no se encuentra registrado en el sistema";
                 statusCode = 404;
             }
-          
+
 
             return new ObjectResult(message) { StatusCode = statusCode };
+        }
+
+        [HttpGet]
+        [Route("allUser")]
+        [Authorize]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            List<User> users = new List<User>();
+            IEnumerable<User> usersTemp = null;
+            var mensage = "";
+            int statusCode = 400;
+            if (!User.IsInRole("manager"))
+            {
+                statusCode = 403;
+            }
+            else
+            {
+                usersTemp = _unitOfWork.Users.GetAll();
+                foreach ( User user in usersTemp)
+                {
+                    user.IdPositionNavigation = _unitOfWork.Positions.GetById(user.IdPosition);
+                    users.Add(user);
+                }
+                statusCode = 200;
+            }
+            return new ObjectResult(users) { StatusCode = statusCode };
+
         }
 
         [HttpGet]
@@ -104,6 +135,17 @@ namespace kanbanApi.Controllers
             user.IdUserTypeNavigation = _unitOfWork.UserTypes.GetById(user.IdUserType);
             return Ok(user);
         }
-       
+        public string Template(User user,string newpassword)
+        {
+            var template = "HOLA "+user.Name.ToUpper() +" "+ user.LastName.ToUpper() + " HEMOS RECIBIDO UNA SOLICITUD DE CAMBIO DE CAMBIO DE CONTRASEÑA" + "\n\r"
+                + " SU NUEVA CONTRASEÑA ES  :" + newpassword;
+            return template;
+        }
+       public string GenerateNewPassword()
+        {
+            Random random = new Random();
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(chars.Select(c => chars[random.Next(chars.Length)]).Take(8).ToArray());
+        }
     }
 }

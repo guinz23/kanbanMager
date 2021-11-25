@@ -20,6 +20,9 @@ namespace kanbanApi.UnitOfWorks
             UserTypes = new UserTypeRepository(_context);
             Companies = new CompanyRepository(_context);
             Projects = new ProjectRepository(_context);
+            UserOnProjects = new UserOnProjectRepository(_context);
+            Prioritys = new PriorityRepository(_context);
+            Tasks = new TaskRepository(_context);
         }
         public IUserRepository Users { get; private set; }
 
@@ -30,6 +33,12 @@ namespace kanbanApi.UnitOfWorks
         public ICompanyRepository Companies { get; private set; }
 
         public IProjectRepository Projects { get; private set; }
+
+        public IUserOnProjectRepository UserOnProjects { get; private set; }
+
+        public IPriorityRepository Prioritys { get; private set; }
+
+        public ITaskRepository Tasks { get; private set; }
 
         public int Complete()
         {

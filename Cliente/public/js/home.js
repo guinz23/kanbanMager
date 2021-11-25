@@ -11,6 +11,9 @@ $(document).ready(function () {
            session.removeSession();
         });
     }
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+    });
 });
 function loadInfo(session){
     let auth = session.getSession();

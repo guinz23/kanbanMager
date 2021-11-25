@@ -10,27 +10,71 @@
   integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src="https://kit.fontawesome.com/aa65253b05.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="./css/Toast.min.css">
 <link rel="stylesheet" href="./css/index.css">
 <link rel="stylesheet" href="./css/progress.css">
 <script src="./js/modules/Session.js"></script>
 <body>
-  <div class="container">
-    <div class="row pt-5">
-       <div class="col-xxl-12 col-xl-12 col-lg-6 col-md-6 col-sm-12 col-12 p-5">
-        <div class="card" style="width: 30rem;">
-            <div class="card-body">
+  <div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>Kaban Manager</h3>
+        </div>
+
+        <ul class="list-unstyled components">
+            <li>
+              <a class="home" href="javascript:void(0)"><i class="fas fa-home"> Inicio</i></a>
+            </li>
+            <li>
+                <a class="project" href="javascript:void(0)"><i class="fas fa-project-diagram"> Proyectos</i></a>
+            </li>
+            <li>
+                <a class="assignments" href="javascript:void(0)"><i class="fas fa-calendar-plus"> Asignaciones</i></a>
+            </li>
+            <li>
+              <a class="users" href="javascript:void(0)"><i class="fas fa-user"> Colaboradores</i></a>
+          </li>
+          <li>
+            <a class="company" href="javascript:void(0)"><i class="fas fa-building"> Empresa</i></a>
+        </li>
+        <li>
+          <a class="report" href="javascript:void(0)"><i class="fas fa-file-alt"> Reportes</i></a>
+      </li>
+        </ul>
+
+        <ul class="list-unstyled CTAs">
+            <li>
               <h5 id="card-name" class="card-title"></h5>
-              <h6 id="card-lastname" class="card-subtitle mb-2 text-muted"></h6>
+              <h6 id="card-lastname" class="card-subtitle mb-2 "></h6>
               <h6 id="card-role"></h6>
-              <button type="button" id="btn-logout" class="btn btn-success">Logout</button>
-            </div>
-          </div>     
-       </div>
+            </li>
+            <li>
+              <button type="button" id="btn-logout" class="btn btn-primary btn-lg">Cerrar Sessión</button>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content">
+      <nav id="nav" class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
+            <form class="d-flex justify-content-end">
+              <input class="form-control me-2" type="search" placeholder="Búscar" aria-label="Search">
+              <button class="btn btn-success" type="submit"><i class="fas fa-search"></i></button>
+            </form>
+          </div>
+        </div>
+      </nav>
     </div>
-  </div>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</div>
+<script src="./js/modules/tabsNavigation.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
     integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
     crossorigin="anonymous"></script>

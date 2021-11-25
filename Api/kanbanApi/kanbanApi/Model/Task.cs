@@ -16,6 +16,7 @@ namespace kanbanApi.Model
         public Guid IdUserAssigned { get; set; }
         public Guid IdPriority { get; set; }
         public Guid IdProject { get; set; }
+        public string Name { get; set; }
 
         public virtual Priority IdPriorityNavigation { get; set; }
         public virtual Project IdProjectNavigation { get; set; }
