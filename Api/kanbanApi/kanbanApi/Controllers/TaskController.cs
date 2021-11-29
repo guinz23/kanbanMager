@@ -18,13 +18,13 @@ namespace kanbanApi.Controllers
         }
 
         [HttpGet]
-        [Route("getAllProject")]
+        [Route("getAllTask")]
         [Authorize]
         public async System.Threading.Tasks.Task<IActionResult> GetAllTask()
         {
             var mensage = "";
             int statusCode = 400;
-            IEnumerable<Model.Task> projects = null;
+            IEnumerable<Model.Task> tasks = null;
             if (!User.IsInRole("manager"))
             {
                 mensage = "No tiene los permisos para ejecutar esta accion";
@@ -32,10 +32,10 @@ namespace kanbanApi.Controllers
             }
             else
             {
-                //projects = _unitOfWork.t.Find(x => x.State != "E");
+                tasks = _unitOfWork.Tasks.Find(x=>x.State!="E");
                 statusCode = 200;
             }
-            return new ObjectResult(projects) { StatusCode = statusCode };
+            return new ObjectResult(tasks) { StatusCode = statusCode };
         }
         [HttpPost]
         [Route("registerTask")]
@@ -56,6 +56,20 @@ namespace kanbanApi.Controllers
                 mensage = "Se a creado una tarea con exito ";
                 statusCode = 200;
             }
+            return new ObjectResult(mensage) { StatusCode = statusCode };
+        }
+        [HttpDelete]
+        [Route("deleteTask")]
+        [Authorize]
+        public async Task<IActionResult> DeleteTask([FromBody] Model.Task task)
+        {
+
+            var taskTemp = _unitOfWork.Tasks.GetById(task.Id);
+            taskTemp.State = task.State;
+            _unitOfWork.Tasks.Update(taskTemp);
+            _unitOfWork.Complete();
+            var mensage = "Se elimino una tarea correctamente";
+            var statusCode = 200;
             return new ObjectResult(mensage) { StatusCode = statusCode };
         }
     }

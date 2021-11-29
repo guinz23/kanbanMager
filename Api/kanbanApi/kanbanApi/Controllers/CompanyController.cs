@@ -89,7 +89,7 @@ namespace kanbanApi.Controllers
             return new ObjectResult(mensage) { StatusCode = statusCode };
         }
         [HttpDelete]
-        [Route("")]
+        [Route("deleteCompany")]
         [Authorize]
         public async Task<IActionResult> Delete([FromBody] Company company)
         {

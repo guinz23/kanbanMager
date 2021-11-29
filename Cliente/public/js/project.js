@@ -9,8 +9,7 @@ $(document).ready(function () {
         loadInfo(session);
         getCollaborators(httpRequest, modal);
         loadCompanies(httpRequest);
-        loadCollaboratorAssigned();
-        loadProject(httpRequest,modal);
+        loadProject(httpRequest, modal);
         $("#btn-logout").click(function () {
             session.removeSession();
         });
@@ -30,77 +29,24 @@ function loadInfo(session) {
 function getCollaborators(httpRequest, modal) {
     const promise1 = Promise.resolve(httpRequest.get("GET", "login/allUser", true));
     promise1.then((value) => {
-        console.log(value);
-        var table = $('#tablecollaborators').DataTable({
-            language: {
-                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-            },
-            scrollY: 300,
-            scrollX: true,
-            scrollCollapse: true,
-            paging: false,
-            autoFill: true,
-            data: value,
-            dom: 'Bfrtip',
-            retrieve: true,
-            destroy: true,
-            bInfo: false,
-            select: true,
-            columns: [
-                {
-                    data: "id",
-                    "visible": false,
-                    "render": function (data, type, row, meta) {
-                        return data;
-                    }
-                },
-                {
-                    data: "name",
-                    "render": function (data, type, row, meta) {
-                        return data;
-                    }
-                },
-                {
-                    data: "email",
-                    "render": function (data, type, row, meta) {
-                        return data;
-                    }
-                },
-                {
-                    data: "idPositionNavigation",
-                    "render": function (data, type, row, meta) {
-                        let position = "";
-                        [data].forEach(element => {
-                            position = element.namePosition;
-                        });
-                        return position;
-                    }
-                },
-                {
-                    data: "id",
-                    "render": function (data, type, row, meta) {
-                        return ' <button id="add-btn" class="btn btn-success" type="submit"><i class="fas fa-plus"></i></button>';
-                    }
-                },
-            ]
+        value.forEach(element => {
+            var li = document.createElement('li');
+            var checkbox = document.createElement('input')
+            checkbox.type = 'checkbox';
+            checkbox.id =  element.id;
+            checkbox.name = 'users[]';
+            checkbox.value =  element.id;
+            var label = document.createElement('label')
+            label.htmlFor = element.name;
+            label.appendChild(document.createTextNode("-"+element.name));
+            li.appendChild(checkbox);
+            li.append(label);
+             var ul = document.getElementById('ul');
+             ul.appendChild(li);
         });
-        selectUser(table);
-        setTimeout(function () {
-            modal.hiddenModal($("#processing-modal"));
-        }, 1000);
+
     });
 
-}
-function selectUser(table) {
-    $('#tablecollaborators tbody').on('click', "#add-btn", function () {
-        var row = $(this).parents('tr')[0];
-        let user = table.row(row).data()
-        let userTemp = [];
-        userTemp = JSON.parse(localStorage.getItem('userAssigned')) || [];
-        userTemp.push(user);
-        localStorage.setItem('userAssigned', JSON.stringify(userTemp));
-        loadCollaboratorAssigned();
-    });
 }
 function loadCompanies(httpRequest) {
     const promise1 = Promise.resolve(httpRequest.get("GET", "company/getAllCompany", true));
@@ -114,58 +60,7 @@ function loadCompanies(httpRequest) {
             $mySelect.append($option);
         });
     });
-}
-const loadCollaboratorAssigned = function () {
-    const dataUser = JSON.parse(localStorage.getItem('userAssigned'));
-    var table = $('#tablecollaboratorsAssigned').DataTable({
-        language: {
-            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-        },
-        scrollY: 300,
-        scrollX: true,
-        scrollCollapse: true,
-        paging: false,
-        autoFill: true,
-        data: dataUser,
-        dom: 'Bfrtip',
-        destroy: true,
-        bInfo: false,
-        select: true,
-        searching: false,
-        columns: [
-            {
-                data: "id",
-                "visible": false,
-                "render": function (data, type, row, meta) {
-                    return data;
-                }
-            },
-            {
-                data: "name",
-                "render": function (data, type, row, meta) {
-                    return data;
-                }
-            },
-            {
-                data: "id",
-                "render": function (data, type, row, meta) {
-                    return ' <button id="remove-btn" class="btn btn-danger" type="submit" ><i class="fas fa-trash-alt"></i></button>';
-                }
-            },
-        ]
-    });
-    removeCollaboratorAssigned(table)
-}
-const removeCollaboratorAssigned = function (table) {
-    $('#tablecollaboratorsAssigned tbody').on('click', "#remove-btn", function () {
-        var row = $(this).parents('tr')[0];
-        let user = table.row(row).data();
-        console.log(user);
-        var arrayTemp = JSON.parse(localStorage.getItem('userAssigned'));
-        var someArray = arrayTemp.filter(x => x.id !== user.id);
-        localStorage.setItem('userAssigned', JSON.stringify(someArray));
-        location.reload();
-    });
+
 }
 function registerProject(httpRequest, modal) {
     let form = document.getElementById("form-register-project");
@@ -193,7 +88,7 @@ function registerProject(httpRequest, modal) {
         }, 1000);
     });
 }
-function loadProject(httpRequest,modal) {
+function loadProject(httpRequest, modal) {
     const promise1 = Promise.resolve(httpRequest.get("GET", "project/getAllProject", true));
     promise1.then((value) => {
         console.log(value);
@@ -264,16 +159,19 @@ function loadProject(httpRequest,modal) {
                 },
             ]
         });
-        removeProject(table,httpRequest,modal);
+        removeProject(table, httpRequest, modal);
+        setTimeout(function () {
+            modal.hiddenModal($("#processing-modal"));
+        }, 1000);
     });
 
 }
-function removeProject(table,httpRequest,modal){
+function removeProject(table, httpRequest, modal) {
     $('#table-projects tbody').on('click', "#delete-btn", function () {
         var row = $(this).parents('tr')[0];
         let project = table.row(row).data();
-        let projectDelete= JSON.stringify({"Id":project.id,"State":"E"});
-        const promise1 = Promise.resolve(httpRequest.delete("DELETE", "project/deleteProject",projectDelete ));
+        let projectDelete = JSON.stringify({ "Id": project.id, "State": "E" });
+        const promise1 = Promise.resolve(httpRequest.delete("DELETE", "project/deleteProject", projectDelete));
         promise1.then((value) => {
             new Toast({
                 message: value,
@@ -285,4 +183,7 @@ function removeProject(table,httpRequest,modal){
             }, 1000);
         });
     });
+}
+function updateProject(table, httpRequest, modal) {
+
 }

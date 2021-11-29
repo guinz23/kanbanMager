@@ -111,8 +111,38 @@ class HttpRequest {
 
         return dataTemp;
     }
-    put() {
-
+    async put(type, method, data) {
+        let modal = new ProgressModal();
+        let dataTemp = "";
+        modal.showModal($("#processing-modal"));
+        const session = new Session("autenticated");
+        var result = session.getSession();
+        await $.ajax({
+            url: this.baseUrl + method,
+            headers: {
+                'Authorization': 'Bearer ' + result.token
+            },
+            type: type,
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            success: function (response, jqXHR) {
+                if (jqXHR == "success") {
+                    dataTemp = response;
+                }
+            },
+            error: function (response, jqXHR) {
+                if (jqXHR == "error") {
+                    setTimeout(function () {
+                        new Toast({
+                            message: 'Se encontro un error al procesar la solicitud',
+                            type: 'danger'
+                        });
+                        modal.hiddenModal($("#processing-modal"));
+                    }, 1000);
+                }
+            }
+        });
+        return dataTemp;
     }
     async delete(type, method, data) {
         let modal = new ProgressModal();

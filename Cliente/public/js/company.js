@@ -12,10 +12,10 @@ $(document).ready(function () {
             session.removeSession();
         });
         $("#btn-add-company").click(function () {
-            registerCompany(httpRequest,modal);
+            registerCompany(httpRequest, modal);
         });
         $("#btn-cancel-company").click(function () {
-         clearInput();
+            clearInput();
         });
     }
 });
@@ -26,7 +26,7 @@ function loadInfo(session) {
     document.getElementById("card-role").innerText = "Rol: " + auth.role;
 
 }
-function registerCompany(httpRequest,modal) {
+function registerCompany(httpRequest, modal) {
     let form = document.getElementById("form-register-company");
     let name = form.elements[0].value;
     let email = form.elements[1].value;
@@ -37,7 +37,7 @@ function registerCompany(httpRequest,modal) {
             message: value,
             type: 'success'
         });
-        loadTable(httpRequest,modal);
+        loadTable(httpRequest, modal);
         clearInput();
         setTimeout(function () {
             modal.hiddenModal($("#processing-modal"));
@@ -48,7 +48,7 @@ function registerCompany(httpRequest,modal) {
 function loadTable(httpRequest, modal) {
     const promise1 = Promise.resolve(httpRequest.get("GET", "company/getAllCompany", true));
     promise1.then((value) => {
-        $('#example').DataTable({
+        var table = $('#table-company').DataTable({
             language: {
                 "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
             },
@@ -62,12 +62,7 @@ function loadTable(httpRequest, modal) {
             columns: [
                 {
                     data: "id",
-                    "render": function (data, type, row, meta) {
-                        return data;
-                    }
-                },
-                {
-                    data: "email",
+                    "visible": false,
                     "render": function (data, type, row, meta) {
                         return data;
                     }
@@ -79,20 +74,87 @@ function loadTable(httpRequest, modal) {
                     }
                 },
                 {
+                    data: "email",
+                    "render": function (data, type, row, meta) {
+                        return data;
+                    }
+                },
+                {
                     data: "state",
                     "render": function (data, type, row, meta) {
                         return data;
                     }
                 },
+                {
+                    data: "id",
+                    "render": function (data, type, row, meta) {
+                        return ' <button id="delete-btn" class="btn btn-danger" type="submit"><i class="fas fa-trash-alt"></i></button>';
+                    }
+                },
+                {
+                    data: "id",
+                    "render": function (data, type, row, meta) {
+                        return ' <button id="update-btn" class="btn btn-warning" type="submit"><i class="fas fa-edit"></i></button>';
+                    }
+                },
             ]
+
         });
+        removeCompany(table, httpRequest, modal);
+        updateCompany(table, httpRequest, modal);
         setTimeout(function () {
             modal.hiddenModal($("#processing-modal"));
         }, 1000);
     });
 
 }
-function clearInput(){
-    document.getElementsByName("name_company")[0].value="";
-    document.getElementsByName("email_company")[0].value="";
+function clearInput() {
+    document.getElementsByName("name_company")[0].value = "";
+    document.getElementsByName("email_company")[0].value = "";
+}
+
+function removeCompany(table, httpRequest, modal) {
+    $('#table-company tbody').on('click', "#delete-btn", function () {
+        var row = $(this).parents('tr')[0];
+        let company = table.row(row).data();
+        let companyDelete = JSON.stringify({ "Id": company.id, "State": "E" });
+        const promise1 = Promise.resolve(httpRequest.delete("DELETE", "company/deleteCompany", companyDelete));
+        promise1.then((value) => {
+            new Toast({
+                message: value,
+                type: 'success'
+            });
+            setTimeout(function () {
+                modal.hiddenModal($("#processing-modal"));
+            }, 1000);
+            location.reload();
+        });
+    });
+}
+
+function updateCompany(table, httpRequest, modal) {
+    $('#table-company tbody').on('click', "#update-btn", function () {
+        $("#btn-add-company").text("Actualizar");
+        $("#btn-add-company").attr("id", "btn-update-company");
+        var row = $(this).parents('tr')[0];
+        let company = table.row(row).data();
+        document.getElementsByName("name_company")[0].value = company.name;
+        document.getElementsByName("email_company")[0].value = company.email;
+        $("#btn-update-company").click(function () {
+            let nameTemp = document.getElementsByName("name_company")[0].value;
+            let emailTemp = document.getElementsByName("email_company")[0].value;
+            let companyUpdate = JSON.stringify({ "Id": company.id,"Name":nameTemp,"Email": emailTemp });
+            const promise1 = Promise.resolve(httpRequest.put("PATCH", "company/updateCompany", companyUpdate));
+            promise1.then((value) => {
+                new Toast({
+                    message: value,
+                    type: 'success'
+                });
+                setTimeout(function () {
+                    modal.hiddenModal($("#processing-modal"));
+                }, 2000);
+                location.reload();
+            });
+        });
+    });
 }
