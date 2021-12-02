@@ -11,4 +11,7 @@ $(document).ready(function () {
         $('.assignments').on("click",function(){
             window.location.href = "assignments.html";
         })
+        $('.tasks').on("click",function(){
+            window.location.href = "tasks.html";
+        })
 });

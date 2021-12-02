@@ -6,21 +6,39 @@ $(document).ready(function () {
     if (auth == null) {
         window.location.href = "/";
     } else {
-        loadInfo(session);
-        loadtaskbyState(httpRequest,modal);
-        $("#btn-logout").click(function () {
-           session.removeSession();
-        });
+        if(auth.role =="manager"){
+            $(".sidebarManager").attr("hidden",false);
+            $(".container-Manager").attr("hidden",false);
+                loadInfo(session,auth.role);
+                loadtaskbyState(httpRequest,modal);
+
+            $("#btn-logout-manager").click(function () {
+               session.removeSession();
+            });
+        }else{
+            $(".sidebarEmployee").attr("hidden",false);
+            loadInfo(session,auth.role);
+            $("#btn-logout-employee").click(function () {
+               session.removeSession();
+            });
+        }
     }
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
     });
 });
-function loadInfo(session){
+function loadInfo(session,role){
+    if(role =="manager"){
     let auth = session.getSession();
-      document.getElementById("card-name").innerText="Nombre: "+auth.name;
-      document.getElementById("card-lastname").innerText="Apellido: "+auth.lastName;
-      document.getElementById("card-role").innerText="Rol: "+auth.role;
+      document.getElementById("card-name-manager").innerText="Nombre: "+auth.name;
+      document.getElementById("card-lastname-manager").innerText="Apellido: "+auth.lastName;
+      document.getElementById("card-role-manager").innerText="Rol: "+auth.role;
+    }else{
+        let auth = session.getSession();
+        document.getElementById("card-name-employee").innerText="Nombre: "+auth.name;
+        document.getElementById("card-lastname-employee").innerText="Apellido: "+auth.lastName;
+        document.getElementById("card-role-employee").innerText="Rol: "+auth.role;
+    }
     
 }
  function loadtaskbyState(httpRequest,modal){

@@ -6,25 +6,43 @@ $(document).ready(function () {
     if (auth == null) {
         window.location.href = "/";
     } else {
-        loadInfo(session);
+
+        if(auth.role =="manager"){
+            $(".sidebarManager").attr("hidden",false);
+            $(".container-Manager").attr("hidden",false);          
+        loadInfo(session,auth.role);
         getCollaborators(httpRequest, modal);
         loadCompanies(httpRequest);
         loadProject(httpRequest, modal);
-        $("#btn-logout").click(function () {
+        $("#btn-logout-manager").click(function () {
             session.removeSession();
         });
         $("#btn-add-project").click(function () {
             registerProject(httpRequest, modal);
         });
+        }else{
+            $(".sidebarEmployee").attr("hidden",false);
+            loadInfo(session,auth.role);
+            $("#btn-logout-employee").click(function () {
+               session.removeSession();
+            });
+        }
     }
 });
 
-function loadInfo(session) {
+function loadInfo(session,role){
+    if(role =="manager"){
     let auth = session.getSession();
-    document.getElementById("card-name").innerText = "Nombre: " + auth.name;
-    document.getElementById("card-lastname").innerText = "Apellido: " + auth.lastName;
-    document.getElementById("card-role").innerText = "Rol: " + auth.role;
-
+      document.getElementById("card-name-manager").innerText="Nombre: "+auth.name;
+      document.getElementById("card-lastname-manager").innerText="Apellido: "+auth.lastName;
+      document.getElementById("card-role-manager").innerText="Rol: "+auth.role;
+    }else{
+        let auth = session.getSession();
+        document.getElementById("card-name-employee").innerText="Nombre: "+auth.name;
+        document.getElementById("card-lastname-employee").innerText="Apellido: "+auth.lastName;
+        document.getElementById("card-role-employee").innerText="Rol: "+auth.role;
+    }
+    
 }
 function getCollaborators(httpRequest, modal) {
     const promise1 = Promise.resolve(httpRequest.get("GET", "login/allUser", true));

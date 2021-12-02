@@ -105,5 +105,20 @@ namespace kanbanApi.Controllers
             }
             return new ObjectResult(taskByProjects) { StatusCode = statusCode };
         }
+        [HttpPost]
+        [Route("taskByUser")]
+        [Authorize]
+        public async Task<IActionResult> taskByUser([FromBody] User user)
+        {
+            var mensage = "";
+            int statusCode = 400;
+            IEnumerable<Model.Task> tasks = null;
+            if (User.IsInRole("manager") || User.IsInRole("employee"))
+            {
+                tasks = _unitOfWork.Tasks.Find(x => x.IdUserAssigned == user.Id);
+                statusCode = 200;
+            }
+            return new ObjectResult(tasks) { StatusCode = statusCode };
+        }
     }
 }

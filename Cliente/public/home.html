@@ -20,45 +20,79 @@
 
 <body>
   <div class="wrapper">
+    <div hidden class="sidebarManager">
+      <nav id="sidebar">
+        <div class="sidebar-header">
+          <h3>Kaban Manager</h3>
+        </div>
+  
+        <ul class="list-unstyled components">
+          <li>
+            <a class="home" href="javascript:void(0)"><i class="fas fa-home"> Inicio</i></a>
+          </li>
+          <li>
+            <a class="project" href="javascript:void(0)"><i class="fas fa-project-diagram"> Proyectos</i></a>
+          </li>
+          <li>
+            <a class="assignments" href="javascript:void(0)"><i class="fas fa-calendar-plus"> Asignaciones</i></a>
+          </li>
+          <li>
+            <a class="users" href="javascript:void(0)"><i class="fas fa-user"> Colaboradores</i></a>
+          </li>
+          <li>
+            <a class="company" href="javascript:void(0)"><i class="fas fa-building"> Empresa</i></a>
+          </li>
+          <li>
+            <a class="report" href="javascript:void(0)"><i class="fas fa-file-alt"> Reportes</i></a>
+          </li>
+        </ul>
+  
+        <ul class="list-unstyled CTAs">
+          <li>
+            <h5 id="card-name-manager" class="card-title"></h5>
+            <h6 id="card-lastname-manager" class="card-subtitle mb-2 "></h6>
+            <h6 id="card-role-manager"></h6>
+          </li>
+          <li>
+            <button type="button" id="btn-logout-manager" class="btn btn-primary btn-lg">Cerrar Sessión</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div hidden class="sidebarEmployee">
+      <nav id="sidebar">
+        <div class="sidebar-header">
+          <h3>Kaban Manager</h3>
+        </div>
+        <ul class="list-unstyled components">
+          <li>
+            <a class="home" href="javascript:void(0)"><i class="fas fa-home"> Inicio</i></a>
+          </li>
+          <li>
+            <a class="project" href="javascript:void(0)"><i class="fas fa-project-diagram"> Proyectos</i></a>
+          </li>
+          <li>
+            <a class="tasks" href="javascript:void(0)"><i class="fas fa-calendar-plus"> Tareas</i></a>
+          </li>
+          <li>
+            <a class="report" href="javascript:void(0)"><i class="fas fa-file-alt"> Reportes</i></a>
+          </li>
+        </ul>
+  
+        <ul class="list-unstyled CTAs">
+          <li>
+            <h5 id="card-name-employee" class="card-title"></h5>
+            <h6 id="card-lastname-employee" class="card-subtitle mb-2 "></h6>
+            <h6 id="card-role-employee"></h6>
+          </li>
+          <li>
+            <button type="button" id="btn-logout-employee" class="btn btn-primary btn-lg">Cerrar Sessión</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
     <!-- Sidebar  -->
-    <nav id="sidebar">
-      <div class="sidebar-header">
-        <h3>Kaban Manager</h3>
-      </div>
-
-      <ul class="list-unstyled components">
-        <li>
-          <a class="home" href="javascript:void(0)"><i class="fas fa-home"> Inicio</i></a>
-        </li>
-        <li>
-          <a class="project" href="javascript:void(0)"><i class="fas fa-project-diagram"> Proyectos</i></a>
-        </li>
-        <li>
-          <a class="assignments" href="javascript:void(0)"><i class="fas fa-calendar-plus"> Asignaciones</i></a>
-        </li>
-        <li>
-          <a class="users" href="javascript:void(0)"><i class="fas fa-user"> Colaboradores</i></a>
-        </li>
-        <li>
-          <a class="company" href="javascript:void(0)"><i class="fas fa-building"> Empresa</i></a>
-        </li>
-        <li>
-          <a class="report" href="javascript:void(0)"><i class="fas fa-file-alt"> Reportes</i></a>
-        </li>
-      </ul>
-
-      <ul class="list-unstyled CTAs">
-        <li>
-          <h5 id="card-name" class="card-title"></h5>
-          <h6 id="card-lastname" class="card-subtitle mb-2 "></h6>
-          <h6 id="card-role"></h6>
-        </li>
-        <li>
-          <button type="button" id="btn-logout" class="btn btn-primary btn-lg">Cerrar Sessión</button>
-        </li>
-      </ul>
-    </nav>
-
+   
     <!-- Page Content  -->
     <div id="content">
       <nav id="nav" class="navbar navbar-expand-lg navbar-light bg-light">
@@ -69,47 +103,50 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
-            <form class="d-flex justify-content-end">
-              <input class="form-control me-2" type="search" placeholder="Búscar" aria-label="Search">
-              <button class="btn btn-success" type="submit"><i class="fas fa-search"></i></button>
-            </form>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active text-white" aria-current="page" href="#">Inicio</a>
+              </li>
+            </ul>
           </div>
         </div>
       </nav>
-      <div class="container">
-        <div class="row pt-4">
-          <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
-            <div class="card">
-              <div class="card-header bg-danger text-center text-white ">
-                Por Hacer
-              </div>
-              <div class="card-body">
-                <ul id="pending" class="list-group list-group-flush p-3">
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
-            <div class="card">
-              <div class="card-header bg-primary text-center text-white">
-                Haciendose
-              </div>
-              <div class="card-body">
-                <ul id="becoming" class="list-group list-group-flush p-3">
-
-                </ul>
+      <div hidden class="container-Manager">
+        <div class="container">
+          <div class="row pt-4">
+            <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+              <div class="card">
+                <div class="card-header bg-danger text-center text-white ">
+                  Por Hacer
+                </div>
+                <div class="card-body">
+                  <ul id="pending" class="list-group list-group-flush p-3">
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
-            <div class="card">
-              <div class="card-header bg-success text-center text-white">
-                Terminadas
+            <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+              <div class="card">
+                <div class="card-header bg-primary text-center text-white">
+                  Haciendose
+                </div>
+                <div class="card-body">
+                  <ul id="becoming" class="list-group list-group-flush p-3">
+  
+                  </ul>
+                </div>
               </div>
-              <div class="card-body">
-                <ul id="finished" class="list-group list-group-flush p-3">
-
-                </ul>
+            </div>
+            <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+              <div class="card">
+                <div class="card-header bg-success text-center text-white">
+                  Terminadas
+                </div>
+                <div class="card-body">
+                  <ul id="finished" class="list-group list-group-flush p-3">
+  
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
