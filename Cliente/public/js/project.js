@@ -70,10 +70,10 @@ function registerProject(httpRequest, modal) {
     let TotalAmount = form.elements[3].value;
     let Descripción = form.elements[4].value;
     let IdCompany = form.elements[5].value;
-    const UsersOnProjects = JSON.parse(localStorage.getItem('userAssigned'));
+    var users = $("input[name='users[]']:checked").map(function(){return $(this).val();}).get();
     let UsersOnProjectsTemps = [];
-    UsersOnProjects.forEach(element => {
-        UsersOnProjectsTemps.push({ "IdUser": element.id });
+    users.forEach(element => {
+        UsersOnProjectsTemps.push({ "IdUser": element});
     });
     let project = JSON.stringify({ "Name": Name, "StartDate": StartDate, "DeliveryDate": DeliveryDate, "TotalAmount": TotalAmount, "Descripción": Descripción, "IdCompany": IdCompany, "UsersOnProjects": UsersOnProjectsTemps });
     const promise1 = Promise.resolve(httpRequest.post("POST", "project/registerProject", project, true));
@@ -157,9 +157,16 @@ function loadProject(httpRequest, modal) {
                         return ' <button id="delete-btn" class="btn btn-danger" type="submit"><i class="fas fa-trash-alt"></i></button>';
                     }
                 },
+                {
+                    data: "id",
+                    "render": function (data, type, row, meta) {
+                        return ' <button id="update-btn" class="btn btn-warning" type="submit"><i class="fas fa-edit"></i></button>';
+                    }
+                },
             ]
         });
         removeProject(table, httpRequest, modal);
+        updateProject(table, httpRequest, modal);
         setTimeout(function () {
             modal.hiddenModal($("#processing-modal"));
         }, 1000);
@@ -185,5 +192,33 @@ function removeProject(table, httpRequest, modal) {
     });
 }
 function updateProject(table, httpRequest, modal) {
-
+    $('#table-projects').on('click', "#update-btn", function () {
+        $("#btn-add-projects").text("Actualizar");
+        $("#btn-add-projects").attr("id", "btn-update-projects");
+        var row = $(this).parents('tr')[0];
+        let project = table.row(row).data();
+        let startDate = new Date(project.startDate);
+        let deliveryDate =new Date(project.deliveryDate);
+        let startDateFormatted = startDate.toISOString().split('T')[0];
+        let deliveryDateFormatted = deliveryDate.toISOString().split('T')[0];Formatted = startDate.toISOString().split('T')[0];
+        document.getElementsByName("project_name")[0].value = project.name;
+        document.getElementsByName("startDate")[0].value = startDateFormatted;
+        document.getElementsByName("endDate")[0].value = deliveryDateFormatted;
+        $("#btn-update-projects").click(function () {
+            let nameTemp = document.getElementsByName("name_company")[0].value;
+            let emailTemp = document.getElementsByName("email_company")[0].value;
+            let companyUpdate = JSON.stringify({ "Id": company.id,"Name":nameTemp,"Email": emailTemp });
+            const promise1 = Promise.resolve(httpRequest.put("PATCH", "company/updateCompany", companyUpdate));
+            promise1.then((value) => {
+                new Toast({
+                    message: value,
+                    type: 'success'
+                });
+                setTimeout(function () {
+                    modal.hiddenModal($("#processing-modal"));
+                }, 2000);
+                location.reload();
+            });
+        });
+    });
 }

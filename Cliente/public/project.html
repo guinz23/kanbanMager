@@ -84,14 +84,16 @@
                                 <div style="background-color:#025981;" class="card-header text-white">
                                     <div class="row">
                                         <div class="col-md-8">
-                                            <h3>Crear un proyecyo</h3>
+                                            <h3>Crear un proyecto</h3>
                                             <h6>Ingrese la información solicitada para crear un proyecto</h6>
                                         </div>
                                         <div class="col-md-4">
-                                            <div class="col-md-6"><button id="btn-add-project"
+                                            <div class="row">
+                                                <div class="col-md-6"><button id="btn-add-project"
                                                     class="btn btn-primary">Agregar</button></div>
                                             <div class="col-md-6"><button id="btn-cancel-project"
                                                     class="btn btn-danger">Cancelar</button></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -125,7 +127,7 @@
                                               </select>
                                             </div>
                                              <div class="col-md-6">
-                                                <label for="inputState" class="form-label">Usuarios Asignados al proyecto</label>
+                                                <label for="inputState" class="form-label">Colaboradores</label>
                                                 <ul id="ul"> </ul>
                                              </div>
                                           </form>
@@ -146,7 +148,8 @@
                                     <th>Monto Total</th>
                                     <th>descripción</th>
                                     <th>Estado</th>
-                                    <th>Acciones</th>
+                                    <th>Eliminar</th>
+                                    <th>Actualizar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -156,7 +159,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     <div class="modal modal-static fade" id="processing-modal" role="dialog" aria-hidden="true">
         <div class="modal-dialog">

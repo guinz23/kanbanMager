@@ -1,4 +1,5 @@
 ﻿using kanbanApi.Model;
+using kanbanApi.Model.ViewModels;
 using kanbanApi.UnitOfWorks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -71,6 +72,38 @@ namespace kanbanApi.Controllers
             var mensage = "Se elimino una tarea correctamente";
             var statusCode = 200;
             return new ObjectResult(mensage) { StatusCode = statusCode };
+        }
+
+        [HttpGet]
+        [Route("taskByProject")]
+        [Authorize]
+        public async Task<IActionResult> taskByProject()
+        {
+            var mensage = "";
+            int statusCode = 400;
+            List<TaskByProjectsViewModel> taskByProjects = new List<TaskByProjectsViewModel>();
+
+            if (!User.IsInRole("manager"))
+            {
+                mensage = "No tiene los permisos para ejecutar esta accion";
+                statusCode = 403;
+            }
+            else
+            {
+                var result = _unitOfWork.Tasks.Find(x=>x.State!="E");
+
+                foreach (var user in result)
+                {
+                    var taskTemp = _unitOfWork.Tasks.GetById(user.Id);
+                    TaskByProjectsViewModel projectsViewModel = new TaskByProjectsViewModel();
+                    projectsViewModel.NameTask = taskTemp.Name;
+                    projectsViewModel.NameProject = _unitOfWork.Projects.GetById(taskTemp.IdProject).Name;
+                    projectsViewModel.StateProject = taskTemp.State;
+                    taskByProjects.Add(projectsViewModel);
+                }
+                statusCode = 200;
+            }
+            return new ObjectResult(taskByProjects) { StatusCode = statusCode };
         }
     }
 }

@@ -4,11 +4,11 @@ $(document).ready(function () {
     if (auth === Object(auth)) {
         window.location.href = "home.html";
     } else {
-        $('.create-account').on("click",function(){
-            alert("action create");
-        });
         $('.reset-password').on("click",function(){
             window.location.href = "resetPassword.html";
+        })
+        $('.create-account').on("click",function(){
+            window.location.href = "register.html";
         })
     }
 });

@@ -17,6 +17,9 @@ $(document).ready(function () {
         $("#btn-cancel-company").click(function () {
             clearInput();
         });
+        $("#btn-update-company").click(function () {
+            updateCompany(httpRequest, modal);
+        });
     }
 });
 function loadInfo(session) {
@@ -101,7 +104,7 @@ function loadTable(httpRequest, modal) {
 
         });
         removeCompany(table, httpRequest, modal);
-        updateCompany(table, httpRequest, modal);
+        loadInfoCompanyInputs(table, httpRequest, modal);
         setTimeout(function () {
             modal.hiddenModal($("#processing-modal"));
         }, 1000);
@@ -132,29 +135,33 @@ function removeCompany(table, httpRequest, modal) {
     });
 }
 
-function updateCompany(table, httpRequest, modal) {
+function loadInfoCompanyInputs(table, httpRequest, modal) {
     $('#table-company tbody').on('click', "#update-btn", function () {
-        $("#btn-add-company").text("Actualizar");
-        $("#btn-add-company").attr("id", "btn-update-company");
+        $("#btn-add-company").attr("hidden",true);
+        $("#div-btn-add-company").attr("hidden",true);
+        $("#btn-update-company").attr("hidden",false);
         var row = $(this).parents('tr')[0];
         let company = table.row(row).data();
         document.getElementsByName("name_company")[0].value = company.name;
         document.getElementsByName("email_company")[0].value = company.email;
-        $("#btn-update-company").click(function () {
-            let nameTemp = document.getElementsByName("name_company")[0].value;
-            let emailTemp = document.getElementsByName("email_company")[0].value;
-            let companyUpdate = JSON.stringify({ "Id": company.id,"Name":nameTemp,"Email": emailTemp });
-            const promise1 = Promise.resolve(httpRequest.put("PATCH", "company/updateCompany", companyUpdate));
-            promise1.then((value) => {
-                new Toast({
-                    message: value,
-                    type: 'success'
-                });
-                setTimeout(function () {
-                    modal.hiddenModal($("#processing-modal"));
-                }, 2000);
-                location.reload();
-            });
+        document.getElementsByName("id_company")[0].value = company.id;
+        
+    });
+}
+function updateCompany(httpRequest, modal){
+    let nameTemp = document.getElementsByName("name_company")[0].value;
+    let emailTemp = document.getElementsByName("email_company")[0].value;
+    let idTemp = document.getElementsByName("id_company")[0].value;
+    let companyUpdate = JSON.stringify({ "Id": idTemp,"Name":nameTemp,"Email": emailTemp });
+    const promise1 = Promise.resolve(httpRequest.put("PATCH", "company/updateCompany", companyUpdate));
+    promise1.then((value) => {
+        new Toast({
+            message: value,
+            type: 'success'
         });
+        setTimeout(function () {
+            modal.hiddenModal($("#processing-modal"));
+        }, 2000);
+        location.reload();
     });
 }
