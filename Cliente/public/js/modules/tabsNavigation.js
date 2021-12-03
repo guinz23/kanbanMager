@@ -14,4 +14,7 @@ $(document).ready(function () {
         $('.tasks').on("click",function(){
             window.location.href = "tasks.html";
         })
+        $('.collaborators').on("click",function(){
+            window.location.href = "collaborators.html";
+        })
 });
