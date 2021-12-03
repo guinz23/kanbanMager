@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    const httpRequest = new HttpRequest("https://localhost:44396/v1/");
+    const httpRequest = new HttpRequest("https://webapikanaban.somee.com/v1/");
     const modal = new ProgressModal();
     const session = new Session("autenticated");
     let auth = session.getSession();
