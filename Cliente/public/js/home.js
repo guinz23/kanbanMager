@@ -16,7 +16,9 @@ $(document).ready(function () {
                session.removeSession();
             });
         }else{
-            $(".sidebarEmployee").attr("hidden",false);
+         
+               $(".sidebarEmployee").attr("hidden",false);
+               $(".container-employee").attr("hidden",false);
             loadInfo(session,auth.role);
             $("#btn-logout-employee").click(function () {
                session.removeSession();

@@ -75,7 +75,7 @@
             <a class="tasks" href="javascript:void(0)"><i class="fas fa-calendar-plus"> Tareas</i></a>
           </li>
           <li>
-            <a class="report" href="javascript:void(0)"><i class="fas fa-file-alt"> Reportes</i></a>
+            <a hidden class="report" href="javascript:void(0)"><i class="fas fa-file-alt"> Reportes</i></a>
           </li>
         </ul>
   
@@ -112,6 +112,47 @@
         </div>
       </nav>
       <div hidden class="container-Manager">
+        <div class="container">
+          <div class="row pt-4">
+            <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+              <div class="card">
+                <div class="card-header bg-danger text-center text-white ">
+                  Por Hacer
+                </div>
+                <div class="card-body">
+                  <ul id="pending" class="list-group list-group-flush p-3">
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+              <div class="card">
+                <div class="card-header bg-primary text-center text-white">
+                  Haciendose
+                </div>
+                <div class="card-body">
+                  <ul id="becoming" class="list-group list-group-flush p-3">
+  
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+              <div class="card">
+                <div class="card-header bg-success text-center text-white">
+                  Terminadas
+                </div>
+                <div class="card-body">
+                  <ul id="finished" class="list-group list-group-flush p-3">
+  
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div hidden class="container-employee">
         <div class="container">
           <div class="row pt-4">
             <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
