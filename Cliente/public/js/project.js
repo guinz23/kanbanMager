@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    const httpRequest = new HttpRequest("https://webapikanaban.somee.com/v1/");
+    const httpRequest = new HttpRequest("https://localhost:44396/v1/");
     const modal = new ProgressModal();
     const session = new Session("autenticated");
     let auth = session.getSession();
@@ -22,7 +22,9 @@ $(document).ready(function () {
         });
         }else{
             $(".sidebarEmployee").attr("hidden",false);
+            $(".container-employee").attr("hidden",false);     
             loadInfo(session,auth.role);
+            loadProjectByUser(httpRequest, modal,session);
             $("#btn-logout-employee").click(function () {
                session.removeSession();
             });
@@ -239,4 +241,69 @@ function updateProject(table, httpRequest, modal) {
             });
         });
     });
+}
+function loadProjectByUser(httpRequest, modal,session) {
+    let auth = session.getSession();
+    let user=  JSON.stringify({"Id":auth.id});
+    const promise1 = Promise.resolve(httpRequest.post("POST", "project/projectByUser",user, true));
+    promise1.then((value) => {
+        console.log(value);
+        var table = $('#table-projects-user').DataTable({
+            language: {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            },
+            scrollY: 300,
+            scrollX: true,
+            scrollCollapse: true,
+            paging: true,
+            autoFill: true,
+            data: value,
+            dom: 'Bfrtip',
+            retrieve: true,
+            destroy: true,
+            bInfo: true,
+            select: true,
+            columns: [
+                {
+                    data: "id",
+                    "visible": false,
+                    "render": function (data, type, row, meta) {
+                        return data;
+                    }
+                },
+                {
+                    data: "name",
+                    "render": function (data, type, row, meta) {
+                        return data;
+                    }
+                },
+                {
+                    data: "startDate",
+                    "render": function (data, type, row, meta) {
+                        let now = new Date(data);
+                        var dateString = moment(now).format('DD-MM-YYYY');
+                        return dateString;
+                    }
+                },
+                {
+                    data: "deliveryDate",
+                    "render": function (data, type, row, meta) {
+                        let now = new Date(data);
+                        var dateString = moment(now).format('DD-MM-YYYY');
+                        return dateString;
+                    }
+                },
+                {
+                    data: "descripción",
+                    "render": function (data, type, row, meta) {
+                        return data;
+                    }
+                },
+            ]
+        });
+        setTimeout(function () {
+            modal.hiddenModal($("#processing-modal"));
+        }, 1000);
+    });
+
 }
