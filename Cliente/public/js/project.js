@@ -1,12 +1,12 @@
 $(document).ready(function () {
-    const httpRequest = new HttpRequest("https://localhost:44396/v1/");
+    const httpRequest = new HttpRequest("https://webapikanaban.somee.com/v1/");
     const modal = new ProgressModal();
     const session = new Session("autenticated");
     let auth = session.getSession();
     if (auth == null) {
         window.location.href = "/";
     } else {
-
+     
         if(auth.role =="manager"){
             $(".sidebarManager").attr("hidden",false);
             $(".container-Manager").attr("hidden",false);          
