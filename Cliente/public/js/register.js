@@ -6,7 +6,7 @@ $(document).ready(function () {
     if (auth === Object(auth)) {
         window.location.href = "home.html";
     } else {
-        $("#btn-submit-register").click(function () { 
+        $("#btn-submit-register").click(function () {
             register(httpRequest, modal, session);
         });
     }
@@ -18,22 +18,37 @@ function register(httpRequest, modal, session) {
     let email = form.elements[2].value;
     let password = form.elements[3].value;
     let passwordconfirm = form.elements[4].value;
-    let IdPosition ="F1F10F5C-FA41-4765-BB68-8D59AED93C73";
+    let IdPosition = "F1F10F5C-FA41-4765-BB68-8D59AED93C73";
     let IdUserType = "8F9D6A86-7018-4E3B-B25D-40E5C33BFFD5";
-    if (name == "" || lastname == "" || email == "" || password == "" || passwordconfirm == "" || IdUserType == "") {
+    if (ValidateEmail(password) == true) {
+        if (name == "" || lastname == "" || email == "" || password == "" || passwordconfirm == "" || IdUserType == "") {
+            new Toast({
+                message: 'Faltan campos por llenar para poder registrarse',
+                type: 'danger'
+            });
+        } else {
+
+            let user = JSON.stringify({ "name": name, "lastname": lastname, "email": email, "password": password, "IdPosition": IdPosition, "IdUserType": IdUserType });
+            const promise1 = Promise.resolve(httpRequest.post("POST", "login/register", user));
+            promise1.then((value) => {
+                setTimeout(function () {
+                    modal.hiddenModal($("#processing-modal"));
+                    window.location.href = "index.html";
+                }, 1000);
+            });
+        }
+    } else {
         new Toast({
-            message: 'Faltan campos por llenar para poder registrarse',
+            message: 'La Contraseña debe tener un minino de 8 caracteres',
             type: 'danger'
         });
-    } else {
-
-        let user = JSON.stringify({ "name": name, "lastname": lastname, "email": email, "password": password, "IdPosition": IdPosition , "IdUserType": IdUserType});
-        const promise1 = Promise.resolve(httpRequest.post("POST", "login/register", user));
-        promise1.then((value) => {
-            setTimeout(function () {
-                modal.hiddenModal($("#processing-modal"));
-                window.location.href = "index.html";
-            }, 1000);
-        });
     }
+
+}
+function ValidateEmail(password) {
+    let state = true;
+    if (password.length < 8) {
+        state = false;
+    }
+    return state
 }

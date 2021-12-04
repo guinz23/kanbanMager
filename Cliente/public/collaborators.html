@@ -86,6 +86,7 @@
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Correo</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -93,6 +94,69 @@
                 </table>
             </div>
         </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Actualizacion de Tarea</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="card">
+              <div class="card-body">
+                  <form id="form-update-user">
+                      <div  class="mb-3">
+                          <label hidden for="exampleInputEmail1" class="form-label">id</label>
+                          <input hidden type="text" class="form-control" name="id_collaborators">
+                      </div>
+                      <div class="mb-3">
+                          <label for="exampleInputEmail1" class="form-label">Nombre</label>
+                          <input disabled type="text" class="form-control" name="name_collaborators">
+                      </div>
+                      <div class="mb-3">
+                          <label for="exampleInputPassword1" class="form-label">Apellido</label>
+                          <input disabled type="text" class="form-control" name="lastname_collaborators">
+                      </div>
+                      <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Correo</label>
+                        <input disabled type="text" class="form-control" name="email_collaborators">
+                    </div>
+                   <div class="mb-3">
+                    <label for="inputState" class="form-label">Rol</label>
+                    <select id="id_user_types" class="form-control">
+                      <option class="bg-success" selected>Seleccionar...</option>
+                      <option  value="037E483E-5E1C-4FE3-B0DE-087731C2442B">Manager</option>
+                      <option  value="8F9D6A86-7018-4E3B-B25D-40E5C33BFFD5" selected>Empleado</option>
+                    </select>
+                   </div>
+                   <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Estado</label>
+                    <select id="select_state" class="form-control">
+                      <option class="bg-success" selected>Seleccionar...</option>
+                      <option   value="A28D0832-03D7-4E9B-AEA0-FB9AAE77C709">Project Manager</option>
+                      <option  value="9E8C097F-D18B-41CC-BC48-0A895E7EB7A3">QA</option>
+                      <option value="0FA9BE6F-D995-436A-9E69-695A35B6D18A">DESARROLLADOR</option>
+                      <option  value="F1F10F5C-FA41-4765-BB68-8D59AED93C73" >DEfAULT</option>
+                    </select>
+                   </div>
+                   <div  class="mb-3">
+                    <label hidden for="exampleInputEmail1" class="form-label">password</label>
+                    <input hidden type="text" class="form-control" name="password_collaborators">
+                </div>
+                  </form>
+             
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="update-update-user" type="button" class="btn btn-primary">Actualizar</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="modal modal-static fade" id="processing-modal" role="dialog" aria-hidden="true">
         <div class="modal-dialog">

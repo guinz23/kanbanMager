@@ -96,7 +96,11 @@
                                     </div>
                                 </div>
                                 <div id="card_company" class="card-body">
-                                    <form id="form-register-company">
+                                    <form id="form-update-profile">
+                                        <div hidden class="mb-3">
+                                            <label for="exampleInputEmail1" class="form-label">Id</label>
+                                            <input type="text" class="form-control" name="id_user" disabled>
+                                        </div>
                                         <div class="mb-3">
                                             <label for="exampleInputEmail1" class="form-label">Nombre</label>
                                             <input type="text" class="form-control" name="name_user" disabled>
@@ -115,7 +119,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <button id="btn-add-company" class="btn btn-primary">Editar</button>
+                                                <button type="button" id="btn-update-profile" class="btn btn-primary">Actualizar Perfil</button>
                                             </div>
                                         </div>
                                     </form>
