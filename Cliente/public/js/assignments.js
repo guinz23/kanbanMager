@@ -101,7 +101,7 @@ function registerTask(httpRequest, modal) {
         "IdUserAssigned": IdUserAssigned,
         "IdPriority": IdPriority,
         "IdProject": IdProject,
-        "State": "A"
+        "State": "P"
     });
     const promise1 = Promise.resolve(httpRequest.post("POST", "task/registerTask", task, true));
     promise1.then((value) => {

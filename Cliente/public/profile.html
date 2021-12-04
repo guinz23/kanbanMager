@@ -21,47 +21,82 @@
 <body>
     <div class="wrapper">
         <!-- Sidebar  -->
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <h3>Kaban Manager</h3>
-            </div>
-
-            <ul class="list-unstyled components">
-                <li>
+        <div hidden class="sidebarManager">
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <h3>Kaban Manager</h3>
+                </div>
+    
+                <ul class="list-unstyled components">
+                    <li>
+                        <a class="home" href="javascript:void(0)"><i class="fas fa-home"> Inicio</i></a>
+                    </li>
+                    <li>
+                        <a class="project" href="javascript:void(0)"><i class="fas fa-project-diagram"> Proyectos</i></a>
+                    </li>
+                    <li>
+                        <a class="assignments" href="javascript:void(0)"><i class="fas fa-calendar-plus">
+                                Asignaciones</i></a>
+                    </li>
+                    <li>
+                        <a class="collaborators" href="javascript:void(0)"><i class="fas fa-user"> Colaboradores</i></a>
+                    </li>
+                    <li>
+                        <a class="company" href="javascript:void(0)"><i class="fas fa-building"> Empresa</i></a>
+                    </li>
+                    <li>
+                        <a hidden class="report" href="javascript:void(0)"><i class="fas fa-file-alt"> Reportes</i></a>
+                    </li>
+                </ul>
+    
+                <ul class="list-unstyled CTAs">
+                    <li>
+                        <h5 id="card-name-manager" class="card-title"></h5>
+                        <h6 id="card-lastname-manager" class="card-subtitle mb-2 "></h6>
+                        <h6 id="card-role-manager"></h6>
+                    </li>
+                    <li>
+                        <button type="button" id="btn-logout" class="btn btn-primary btn-lg">Cerrar Sessión</button>
+                        <hr>
+                        <button id="btn-profile" type="button" class="btn btn-success btn-lg">Ver Perfil</button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div hidden class="sidebarEmployee">
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                  <h3>Kaban Manager</h3>
+                </div>
+                <ul class="list-unstyled components">
+                  <li>
                     <a class="home" href="javascript:void(0)"><i class="fas fa-home"> Inicio</i></a>
-                </li>
-                <li>
+                  </li>
+                  <li>
                     <a class="project" href="javascript:void(0)"><i class="fas fa-project-diagram"> Proyectos</i></a>
-                </li>
-                <li>
-                    <a class="assignments" href="javascript:void(0)"><i class="fas fa-calendar-plus">
-                            Asignaciones</i></a>
-                </li>
-                <li>
-                    <a class="collaborators" href="javascript:void(0)"><i class="fas fa-user"> Colaboradores</i></a>
-                </li>
-                <li>
-                    <a class="company" href="javascript:void(0)"><i class="fas fa-building"> Empresa</i></a>
-                </li>
-                <li>
+                  </li>
+                  <li>
+                    <a class="tasks" href="javascript:void(0)"><i class="fas fa-calendar-plus"> Tareas</i></a>
+                  </li>
+                  <li>
                     <a hidden class="report" href="javascript:void(0)"><i class="fas fa-file-alt"> Reportes</i></a>
-                </li>
-            </ul>
-
-            <ul class="list-unstyled CTAs">
-                <li>
-                    <h5 id="card-name" class="card-title"></h5>
-                    <h6 id="card-lastname" class="card-subtitle mb-2 "></h6>
-                    <h6 id="card-role"></h6>
-                </li>
-                <li>
-                    <button type="button" id="btn-logout" class="btn btn-primary btn-lg">Cerrar Sessión</button>
+                  </li>
+                </ul>
+          
+                <ul class="list-unstyled CTAs">
+                  <li>
+                    <h5 id="card-name-employee" class="card-title"></h5>
+                    <h6 id="card-lastname-employee" class="card-subtitle mb-2 "></h6>
+                    <h6 id="card-role-employee"></h6>
+                  </li>
+                  <li>
+                    <button type="button" id="btn-logout-employee" class="btn btn-primary btn-lg">Cerrar Sessión</button>
                     <hr>
-                    <button id="btn-profile" type="button" class="btn btn-success btn-lg">Ver Perfil</button>
-                </li>
-            </ul>
-        </nav>
-
+                    <button id="btn-profile-employee" type="button" class="btn btn-success btn-lg">Ver Perfil</button>
+                  </li>
+                </ul>
+              </nav>            
+        </div>
         <!-- Page Content  -->
         <div id="content">
             <nav id="nav" class="navbar navbar-expand-lg navbar-light bg-light">
@@ -80,55 +115,110 @@
                     </div>
                 </div>
             </nav>
-            <div class="container pt-5">
-                <div class="row">
-                    <div class="col-xxl-12 col-xl-12 col-lg-6 col-md-6 col-sm-12 col-12">
-                        <div class="">
-                            <div class="card">
-                                <div style="background-color:#025981;" class="card-header text-white">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <h3>Mi Perfil</h3>
-                                        </div>
-                                        <div class="col-md-4">
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="card_company" class="card-body">
-                                    <form id="form-update-profile">
-                                        <div hidden class="mb-3">
-                                            <label for="exampleInputEmail1" class="form-label">Id</label>
-                                            <input type="text" class="form-control" name="id_user" disabled>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="exampleInputEmail1" class="form-label">Nombre</label>
-                                            <input type="text" class="form-control" name="name_user" disabled>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="exampleInputEmail1" class="form-label">Apellidos</label>
-                                            <input type="text" class="form-control" name="lastname_user" disabled>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="exampleInputPassword1" class="form-label">Correo</label>
-                                            <input type="email" class="form-control" name="email_user" disabled>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                                            <input type="password" class="form-control" name="password_user">
-                                        </div>
+            <div hidden class="container-Manager">
+                <div class="container pt-5">
+                    <div class="row">
+                        <div class="col-xxl-12 col-xl-12 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="">
+                                <div class="card">
+                                    <div style="background-color:#025981;" class="card-header text-white">
                                         <div class="row">
+                                            <div class="col-md-8">
+                                                <h3>Mi Perfil</h3>
+                                            </div>
                                             <div class="col-md-4">
-                                                <button type="button" id="btn-update-profile" class="btn btn-primary">Actualizar Perfil</button>
+    
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
+                                    <div id="card_company" class="card-body">
+                                        <form id="form-update-profile-manager">
+                                            <div hidden class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">Id</label>
+                                                <input type="text" class="form-control" name="id_user_manager" disabled>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">Nombre</label>
+                                                <input type="text" class="form-control" name="name_user_manager" disabled>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">Apellidos</label>
+                                                <input type="text" class="form-control" name="lastname_user_manager" disabled>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputPassword1" class="form-label">Correo</label>
+                                                <input type="email" class="form-control" name="email_user_manager" disabled>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                                                <input type="password" class="form-control" name="password_user_manager">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <button type="button" id="btn-update-profile-manager" class="btn btn-primary">Actualizar Perfil</button>
+                                                    <button type="button" id="btn-delete-profile-manager" class="btn btn-primary">Eliminar Cuenta</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+              </div>
+              <div hidden class="container-employee">
+                <div class="container pt-5">
+                    <div class="row">
+                        <div class="col-xxl-12 col-xl-12 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="">
+                                <div class="card">
+                                    <div style="background-color:#025981;" class="card-header text-white">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <h3>Mi Perfil</h3>
+                                            </div>
+                                            <div class="col-md-4">
+    
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="card_company" class="card-body">
+                                        <form id="form-update-profile-employee">
+                                            <div hidden class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">Id</label>
+                                                <input type="text" class="form-control" name="id_user_employee" disabled>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">Nombre</label>
+                                                <input type="text" class="form-control" name="name_user_employee" disabled>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">Apellidos</label>
+                                                <input type="text" class="form-control" name="lastname_user_employee" disabled>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputPassword1" class="form-label">Correo</label>
+                                                <input type="email" class="form-control" name="email_user_employee" disabled>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                                                <input type="password" class="form-control" name="password_user_employee">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <button type="button" id="btn-update-profile-employee" class="btn btn-primary">Actualizar Perfil</button>
+                                                    <button type="button" id="btn-delete-profile-employee" class="btn btn-primary">Eliminar Cuenta</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
         </div>
 
         <script src="./js/modules/tabsNavigation.js"></script>
