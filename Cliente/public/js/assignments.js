@@ -189,8 +189,15 @@ function registerTask(httpRequest, modal) {
                         return ' <button id="delete-btn" class="btn btn-danger" type="submit"><i class="fas fa-trash-alt"></i></button>';
                     }
                 },
+                {
+                    data: "id",
+                    "render": function (data, type, row, meta) {
+                        return ' <button id="update-btn" class="btn btn-warning" type="submit"><i class="fas fa-edit"></i></button>';
+                    }
+                },
             ]
         });
+        updateTask(table,httpRequest,modal);
          removeTask(table,httpRequest,modal);
     });
 
@@ -214,3 +221,39 @@ function registerTask(httpRequest, modal) {
         });
     });
 }
+ function updateTask(table,httpRequest,modal){
+    $('#table-task').on('click', "#update-btn", function () {
+        $("#btn-add-assignments").text("Actualizar");
+        $("#btn-add-assignments").attr("id", "btn-update-assignments");
+        var row = $(this).parents('tr')[0];
+        let task = table.row(row).data();
+        console.log(task);
+        let startDate = new Date(task.startDate);
+        let deliveryDate =new Date(task.deliveryDate);
+        let startDateFormatted = startDate.toISOString().split('T')[0];
+        let deliveryDateFormatted = deliveryDate.toISOString().split('T')[0];Formatted = startDate.toISOString().split('T')[0];
+        document.getElementsByName("task_name")[0].value = task.name;
+        document.getElementsByName("startDate")[0].value = startDateFormatted;
+        document.getElementsByName("endDate")[0].value = deliveryDateFormatted;
+        document.getElementsByName("amount")[0].value = task.amount;
+        document.getElementsByName("description")[0].value = task.description;
+        $("#id_projects option[value="+task.idProject+"]").attr('selected', 'selected');
+        loadUserOnProject(httpRequest, modal,task.idProject);
+        // $("#btn-update-projects").click(function () {
+        //     let nameTemp = document.getElementsByName("name_company")[0].value;
+        //     let emailTemp = document.getElementsByName("email_company")[0].value;
+        //     let companyUpdate = JSON.stringify({ "Id": company.id,"Name":nameTemp,"Email": emailTemp });
+        //     const promise1 = Promise.resolve(httpRequest.put("PATCH", "company/updateCompany", companyUpdate));
+        //     promise1.then((value) => {
+        //         new Toast({
+        //             message: value,
+        //             type: 'success'
+        //         });
+        //         setTimeout(function () {
+        //             modal.hiddenModal($("#processing-modal"));
+        //         }, 2000);
+        //         location.reload();
+        //     });
+        // });
+    });
+ }

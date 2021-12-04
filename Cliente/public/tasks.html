@@ -47,6 +47,8 @@
                 </li>
                 <li>
                   <button type="button" id="btn-logout-employee" class="btn btn-primary btn-lg">Cerrar Sessión</button>
+                  <hr>
+                  <button id="btn-profile" type="button" class="btn btn-success btn-lg">Ver Perfil</button>
                 </li>
               </ul>
             </nav>
@@ -96,17 +98,52 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Actualizacion de Tarea</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-           aqui va el card
+            <div class="card">
+              <div class="card-body">
+                  <form id="form-update-task">
+                      <div  class="mb-3">
+                          <label hidden for="exampleInputEmail1" class="form-label">id</label>
+                          <input hidden type="text" class="form-control" name="id_task">
+                      </div>
+                      <div class="mb-3">
+                          <label for="exampleInputEmail1" class="form-label">Nombre</label>
+                          <input disabled type="text" class="form-control" name="name_task">
+                      </div>
+                      <div class="mb-3">
+                          <label for="exampleInputPassword1" class="form-label">Fecha Entrega</label>
+                          <input disabled type="date" class="form-control" name="delivery_date">
+                      </div>
+                      <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Monto de la Tarea</label>
+                        <input disabled type="number" class="form-control" name="amount_task">
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleInputPassword1" class="form-label">Descripcion</label>
+                      <input disabled type="text" class="form-control" name="description_task">
+                  </div>
+                   <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Estado</label>
+                    <select id="select_state" class="form-control">
+                      <option selected>...</option>
+                      <option value="A">Aceptado</option>
+                      <option value="T">Terminado</option>
+                      <option value="P">Pendiente</option>
+                    </select>
+                   </div>
+                  </form>
+             
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             <button id="update-task" type="button" class="btn btn-primary">Actualizar</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
           </div>
         </div>
       </div>

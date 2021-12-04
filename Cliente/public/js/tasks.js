@@ -76,7 +76,17 @@ function loadTaskByUser(httpRequest,modal,session){
                 {
                     data: "state",
                     "render": function (data, type, row, meta) {
-                        return data;
+                        let state="";
+                        if(data=="A"){
+                          state="Aceptado"
+                        }
+                        if(data=="P"){
+                            state="Pendiente"
+                          }
+                          if(data=="T"){
+                            state="Terminado"
+                          }
+                        return state;
                     }
                 },
                 {
@@ -97,15 +107,32 @@ function modalInfo(table){
     $('#table-task-user tbody').on('click', "#update-btn", function () {
         var row = $(this).parents('tr')[0];
         let task = table.row(row).data();
-        console.log(task)
+        console.log(task);  
         $('#exampleModal').modal();
-        // document.getElementsByName("name_company")[0].value = company.name;
-        // document.getElementsByName("email_company")[0].value = company.email;
-        // document.getElementsByName("id_company")[0].value = company.id;
-        
+        let deliveryDate =new Date(task.deliveryDate);
+        let deliveryDateFormatted = deliveryDate.toISOString().split('T')[0];
+        document.getElementsByName("id_task")[0].value = task.id;
+        document.getElementsByName("name_task")[0].value = task.name;
+        document.getElementsByName("delivery_date")[0].value = deliveryDateFormatted;
+        document.getElementsByName("amount_task")[0].value = task.amount;
+        document.getElementsByName("description_task")[0].value = task.description;
     });
 }
 
 function updateTask(httpRequest,modal){
-
+    let form = document.getElementById("form-update-task");
+    let id = form.elements[0].value;
+    let state= form.elements[5].value;
+    let taskUpdate = JSON.stringify({ "Id":id, "State":state});
+    const promise1 = Promise.resolve(httpRequest.put("PATCH", "task/updateTask", taskUpdate));
+    promise1.then((value) => {
+        new Toast({
+            message: value,
+            type: 'success'
+        });
+        setTimeout(function () {
+            modal.hiddenModal($("#processing-modal"));
+        }, 2000);
+        location.reload();
+    });
 }

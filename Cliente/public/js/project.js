@@ -167,6 +167,7 @@ function loadProject(httpRequest, modal) {
                 },
                 {
                     data: "state",
+                    "visible": false,
                     "render": function (data, type, row, meta) {
                         return data;
                     }
@@ -217,6 +218,7 @@ function updateProject(table, httpRequest, modal) {
         $("#btn-add-projects").attr("id", "btn-update-projects");
         var row = $(this).parents('tr')[0];
         let project = table.row(row).data();
+        console.log(project);
         let startDate = new Date(project.startDate);
         let deliveryDate =new Date(project.deliveryDate);
         let startDateFormatted = startDate.toISOString().split('T')[0];
@@ -224,6 +226,10 @@ function updateProject(table, httpRequest, modal) {
         document.getElementsByName("project_name")[0].value = project.name;
         document.getElementsByName("startDate")[0].value = startDateFormatted;
         document.getElementsByName("endDate")[0].value = deliveryDateFormatted;
+        document.getElementsByName("amount")[0].value = project.totalAmount;
+        document.getElementsByName("description")[0].value = project.descripción;
+        $("#id_companies option[value="+project.idCompany+"]").attr('selected', 'selected');
+        loadUserOnProject(httpRequest, modal,project.id);
         $("#btn-update-projects").click(function () {
             let nameTemp = document.getElementsByName("name_company")[0].value;
             let emailTemp = document.getElementsByName("email_company")[0].value;
@@ -306,4 +312,18 @@ function loadProjectByUser(httpRequest, modal,session) {
         }, 1000);
     });
 
+}
+
+function loadUserOnProject(httpRequest, modal, id_project) {
+    let project = JSON.stringify({ "id": id_project });
+    const promise1 = Promise.resolve(httpRequest.post("POST", "project/usersOnProject", project, true));
+    promise1.then((value) => {
+        $('input[type=checkbox]').prop('checked',false);
+         value.forEach(element => {
+            $("#"+element.id+"").prop("checked", true);
+        });
+    });
+    setTimeout(function () {
+        modal.hiddenModal($("#processing-modal"));
+    }, 1000);
 }

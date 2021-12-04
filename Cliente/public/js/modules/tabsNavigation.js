@@ -17,4 +17,7 @@ $(document).ready(function () {
         $('.collaborators').on("click",function(){
             window.location.href = "collaborators.html";
         })
+        $('#btn-profile').on("click",function(){
+            window.location.href = "profile.html";
+        });
 });

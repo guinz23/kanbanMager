@@ -47,8 +47,8 @@ function loadInfo(session,role){
     const promise1 = Promise.resolve(httpRequest.get("GET", "task/taskByProject", true));
     promise1.then((value) => {
         console.log(value);
-       const becoming =  value.filter(task => task.stateProject == "A");
-       const pending = value.filter(task => task.stateProject == "P");
+       const becoming =  value.filter(task => task.stateProject == "P");
+       const pending = value.filter(task => task.stateProject == "A");
        const finished = value.filter(task => task.stateProject == "T");
         if(pending!=[]){
            becoming.forEach(element => {
