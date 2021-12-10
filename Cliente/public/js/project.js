@@ -83,6 +83,7 @@ function loadCompanies(httpRequest) {
 
 }
 function registerProject(httpRequest, modal) {
+    console.log("se ejecuta crear");
     let form = document.getElementById("form-register-project");
     let Name = form.elements[0].value;
     let StartDate = form.elements[1].value;
@@ -214,8 +215,9 @@ function removeProject(table, httpRequest, modal) {
 }
 function updateProject(table, httpRequest, modal) {
     $('#table-projects').on('click', "#update-btn", function () {
-        $("#btn-add-projects").text("Actualizar");
-        $("#btn-add-projects").attr("id", "btn-update-projects");
+        $("#div-btn-add-project").attr("hidden",true);
+        $("#div-btn-update-project").attr("hidden",false);
+        $("#id_companies").attr("disabled", "disabled");
         var row = $(this).parents('tr')[0];
         let project = table.row(row).data();
         console.log(project);
@@ -223,6 +225,7 @@ function updateProject(table, httpRequest, modal) {
         let deliveryDate =new Date(project.deliveryDate);
         let startDateFormatted = startDate.toISOString().split('T')[0];
         let deliveryDateFormatted = deliveryDate.toISOString().split('T')[0];Formatted = startDate.toISOString().split('T')[0];
+        document.getElementsByName("id_project")[0].value = project.id;
         document.getElementsByName("project_name")[0].value = project.name;
         document.getElementsByName("startDate")[0].value = startDateFormatted;
         document.getElementsByName("endDate")[0].value = deliveryDateFormatted;
@@ -230,11 +233,22 @@ function updateProject(table, httpRequest, modal) {
         document.getElementsByName("description")[0].value = project.descripción;
         $("#id_companies option[value="+project.idCompany+"]").attr('selected', 'selected');
         loadUserOnProject(httpRequest, modal,project.id);
-        $("#btn-update-projects").click(function () {
-            let nameTemp = document.getElementsByName("name_company")[0].value;
-            let emailTemp = document.getElementsByName("email_company")[0].value;
-            let companyUpdate = JSON.stringify({ "Id": company.id,"Name":nameTemp,"Email": emailTemp });
-            const promise1 = Promise.resolve(httpRequest.put("PATCH", "company/updateCompany", companyUpdate));
+        $("#btn-update-project").click(function () {
+            let form = document.getElementById("form-register-project");
+            let idProject=form.elements[0].value;
+            let Name = form.elements[1].value;
+            let StartDate = form.elements[2].value;
+            let DeliveryDate = form.elements[3].value;
+            let TotalAmount = form.elements[4].value;
+            let Descripción = form.elements[5].value;
+            let IdCompany = form.elements[6].value;
+            var users = $("input[name='users[]']:checked").map(function(){return $(this).val();}).get();
+            let UsersOnProjectsTemps = [];
+            users.forEach(element => {
+                UsersOnProjectsTemps.push({ "IdUser": element});
+            });
+            let project = JSON.stringify({"Id":idProject,"Name": Name, "StartDate": StartDate, "DeliveryDate": DeliveryDate, "TotalAmount": TotalAmount, "Descripción": Descripción, "IdCompany": IdCompany, "UsersOnProjects": UsersOnProjectsTemps });
+            const promise1 = Promise.resolve(httpRequest.put("PATCH", "project/UpdateProject", project));
             promise1.then((value) => {
                 new Toast({
                     message: value,
@@ -242,7 +256,7 @@ function updateProject(table, httpRequest, modal) {
                 });
                 setTimeout(function () {
                     modal.hiddenModal($("#processing-modal"));
-                }, 2000);
+                }, 3000);
                 location.reload();
             });
         });

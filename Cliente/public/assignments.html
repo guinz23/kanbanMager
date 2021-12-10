@@ -57,7 +57,7 @@
                 <li>
                     <button type="button" id="btn-logout" class="btn btn-primary btn-lg">Cerrar Sessión</button>
                     <hr>
-                    <button id="btn-profile" type="button" class="btn btn-success btn-lg">Ver Perfil</button>
+                    <button id="btn-profile-manager" type="button" class="btn btn-success btn-lg">Ver Perfil</button>
                 </li>
             </ul>
         </nav>
@@ -93,8 +93,10 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="row pt-3">
-                                                <div class="col-md-6"><button id="btn-add-assignments"
+                                                <div id="div-btn-add-assignments" class="col-md-6"><button id="btn-add-assignments"
                                                         class="btn btn-primary">Agregar</button></div>
+                                                        <div hidden id="div-btn-update-assignments" class="col-md-6"><button id="btn-update-assignments"
+                                                            class="btn btn-primary">Actualizar</button></div>
                                                 <div class="col-md-6"><button id="btn-cancel-assignments"
                                                         class="btn btn-danger">Cancelar</button></div>
                                             </div>
@@ -104,6 +106,10 @@
                                 <div id="card_company" class="card-body">
                                     <div class="d-flex justify-content-center">
                                         <form class="row g-3" id="form-register-assignments">
+                                            <div hidden class="col-md-12">
+                                                <label class="form-label">Id</label>
+                                                <input type="text" class="form-control" name="task_id">
+                                              </div>
                                             <div class="col-md-12">
                                                 <label class="form-label">Nombre Tarea</label>
                                                 <input type="text" class="form-control" name="task_name">

@@ -23,4 +23,5 @@ $(document).ready(function () {
         $('#btn-profile-manager').on("click",function(){
             window.location.href = "profile.html";
         });
+        
 });

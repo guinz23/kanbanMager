@@ -56,7 +56,7 @@
                 <li>
                   <button type="button" id="btn-logout-manager" class="btn btn-primary btn-lg">Cerrar Sessión</button>
                   <hr>
-                  <button id="btn-profile" type="button" class="btn btn-success btn-lg">Ver Perfil</button>
+                  <button id="btn-profile-manager" type="button" class="btn btn-success btn-lg">Ver Perfil</button>
                 </li>
               </ul>
             </nav>
@@ -90,7 +90,7 @@
                 <li>
                   <button type="button" id="btn-logout-employee" class="btn btn-primary btn-lg">Cerrar Sessión</button>
                   <hr>
-                  <button id="btn-profile" type="button" class="btn btn-success btn-lg">Ver Perfil</button>
+                  <button id="btn-profile-employee" type="button" class="btn btn-success btn-lg">Ver Perfil</button>
                 </li>
               </ul>
             </nav>
@@ -128,8 +128,10 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="row">
-                                                <div class="col-md-6"><button id="btn-add-project"
+                                                <div id="div-btn-add-project" class="col-md-6"><button id="btn-add-project"
                                                     class="btn btn-primary">Agregar</button></div>
+                                                    <div hidden id="div-btn-update-project" class="col-md-6"><button id="btn-update-project"
+                                                      class="btn btn-primary">Actualizar</button></div>
                                             <div class="col-md-6"><button id="btn-cancel-project"
                                                     class="btn btn-danger">Cancelar</button></div>
                                             </div>
@@ -139,6 +141,10 @@
                                 <div id="card_company" class="card-body">
                                     <div class="d-flex justify-content-center">
                                         <form class="row g-3" id="form-register-project">
+                                          <div hidden class="col-md-12">
+                                            <label class="form-label">Nombre Proyecto</label>
+                                            <input type="text" class="form-control" name="id_project">
+                                          </div>
                                             <div class="col-md-12">
                                               <label class="form-label">Nombre Proyecto</label>
                                               <input type="text" class="form-control" name="project_name">

@@ -137,9 +137,9 @@ function removeCompany(table, httpRequest, modal) {
 
 function loadInfoCompanyInputs(table, httpRequest, modal) {
     $('#table-company tbody').on('click', "#update-btn", function () {
-        $("#btn-add-company").attr("hidden",true);
+        // $("#btn-add-company").attr("hidden",true);
         $("#div-btn-add-company").attr("hidden",true);
-        $("#btn-update-company").attr("hidden",false);
+        $("#div-btn-update-company").attr("hidden",false);
         var row = $(this).parents('tr')[0];
         let company = table.row(row).data();
         document.getElementsByName("name_company")[0].value = company.name;

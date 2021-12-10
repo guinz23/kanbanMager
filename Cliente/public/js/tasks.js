@@ -124,7 +124,7 @@ function updateTask(httpRequest,modal){
     let id = form.elements[0].value;
     let state= form.elements[5].value;
     let taskUpdate = JSON.stringify({ "Id":id, "State":state});
-    const promise1 = Promise.resolve(httpRequest.put("PATCH", "task/updateTask", taskUpdate));
+    const promise1 = Promise.resolve(httpRequest.put("DELETE", "task/deleteTask", taskUpdate));
     promise1.then((value) => {
         new Toast({
             message: value,

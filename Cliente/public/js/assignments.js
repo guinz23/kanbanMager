@@ -91,7 +91,6 @@ function registerTask(httpRequest, modal) {
     let Description = form.elements[5].value;
     let IdProject = form.elements[6].value;
     let IdUserAssigned = form.elements[7].value;
-    let State = "A";
     let task = JSON.stringify({
         "Name": Name,
         "Description":Description,
@@ -223,37 +222,62 @@ function registerTask(httpRequest, modal) {
 }
  function updateTask(table,httpRequest,modal){
     $('#table-task').on('click', "#update-btn", function () {
-        $("#btn-add-assignments").text("Actualizar");
-        $("#btn-add-assignments").attr("id", "btn-update-assignments");
+        $("#div-btn-add-assignments").attr("hidden",true);
+        $("#div-btn-update-assignments").attr("hidden",false);
         var row = $(this).parents('tr')[0];
         let task = table.row(row).data();
         console.log(task);
+        $("#id_priority option[value="+task.idPriority+"]").attr('selected', false);
+        $("#id_projects option[value="+task.idProject+"]").attr('selected', false);
+        $("#id_projects").attr("disabled", "disabled");
         let startDate = new Date(task.startDate);
         let deliveryDate =new Date(task.deliveryDate);
         let startDateFormatted = startDate.toISOString().split('T')[0];
         let deliveryDateFormatted = deliveryDate.toISOString().split('T')[0];Formatted = startDate.toISOString().split('T')[0];
+        document.getElementsByName("task_id")[0].value = task.id;
         document.getElementsByName("task_name")[0].value = task.name;
         document.getElementsByName("startDate")[0].value = startDateFormatted;
         document.getElementsByName("endDate")[0].value = deliveryDateFormatted;
         document.getElementsByName("amount")[0].value = task.amount;
         document.getElementsByName("description")[0].value = task.description;
-        $("#id_projects option[value="+task.idProject+"]").attr('selected', 'selected');
+        $("#id_projects option[value="+task.idProject+"]").attr('selected', true);
+        $("#id_priority option[value="+task.idPriority+"]").attr('selected', true);
         loadUserOnProject(httpRequest, modal,task.idProject);
-        // $("#btn-update-projects").click(function () {
-        //     let nameTemp = document.getElementsByName("name_company")[0].value;
-        //     let emailTemp = document.getElementsByName("email_company")[0].value;
-        //     let companyUpdate = JSON.stringify({ "Id": company.id,"Name":nameTemp,"Email": emailTemp });
-        //     const promise1 = Promise.resolve(httpRequest.put("PATCH", "company/updateCompany", companyUpdate));
-        //     promise1.then((value) => {
-        //         new Toast({
-        //             message: value,
-        //             type: 'success'
-        //         });
-        //         setTimeout(function () {
-        //             modal.hiddenModal($("#processing-modal"));
-        //         }, 2000);
-        //         location.reload();
-        //     });
-        // });
+        $("#id_user_on_project option[value="+task.idUserAssigned+"]").attr('selected', true);
+        $("#btn-update-assignments").click(function () {
+            let form = document.getElementById("form-register-assignments");
+            let Id = form.elements[0].value;
+            let Name = form.elements[1].value;
+            let StartDate = form.elements[2].value;
+            let DeliveryDate = form.elements[3].value;
+            let Amount = form.elements[4].value;
+            let IdPriority = form.elements[5].value;
+            let Description = form.elements[6].value;
+            let IdProject = form.elements[7].value;
+            let IdUserAssigned = form.elements[8].value;
+            let task = JSON.stringify({
+                "Id":Id,
+                "Name": Name,
+                "Description":Description,
+                "StartDate": StartDate,
+                "DeliveryDate": DeliveryDate,
+                "Amount": Amount,
+                "IdUserAssigned": IdUserAssigned,
+                "IdPriority": IdPriority,
+                "IdProject": IdProject,
+                "State": ""
+            });
+            const promise1 = Promise.resolve(httpRequest.put("PATCH", "task/updateTask", task));
+            promise1.then((value) => {
+                new Toast({
+                    message: value,
+                    type: 'success'
+                });
+                setTimeout(function () {
+                    modal.hiddenModal($("#processing-modal"));
+                }, 2000);
+                location.reload();
+            });
+        });
     });
  }
