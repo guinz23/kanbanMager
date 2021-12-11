@@ -7,7 +7,7 @@ $(document).ready(function () {
         window.location.href = "/";
     } else {
         loadInfo(session);
-        loadUsers(httpRequest, modal);
+        loadUsers(httpRequest, modal,session);
         $("#btn-logout").click(function () {
             session.removeSession();
         });
@@ -25,8 +25,10 @@ function loadInfo(session){
         document.getElementById("card-role").innerText="Rol: "+auth.role; 
 }
 
-function loadUsers(httpRequest, modal) {
-    const promise1 = Promise.resolve(httpRequest.get("GET", "login/allUser", true));
+function loadUsers(httpRequest, modal,session) {
+    let auth = session.getSession();
+    let user = JSON.stringify({"IdUserType": auth.idRole})
+    const promise1 = Promise.resolve(httpRequest.post("POST", "login/allUser",user, true));
     promise1.then((value) => {
         console.log(value);
         var table = $('#table-users').DataTable({
@@ -68,6 +70,12 @@ function loadUsers(httpRequest, modal) {
                     data: "email",
                     "render": function (data, type, row, meta) {
                         return data;
+                    }
+                },
+                {
+                    data: "idUserType",
+                    "render": function (data, type, row, meta) {
+                        return "Empleado";
                     }
                 },
                 {

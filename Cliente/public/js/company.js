@@ -31,8 +31,8 @@ function loadInfo(session) {
 }
 function registerCompany(httpRequest, modal) {
     let form = document.getElementById("form-register-company");
-    let name = form.elements[0].value;
-    let email = form.elements[1].value;
+    let name = form.elements[1].value;
+    let email = form.elements[2].value;
     let company = JSON.stringify({ "Name": name, "Email": email });
     const promise1 = Promise.resolve(httpRequest.post("POST", "company/registerCompany", company, true));
     promise1.then((value) => {
@@ -45,6 +45,7 @@ function registerCompany(httpRequest, modal) {
         setTimeout(function () {
             modal.hiddenModal($("#processing-modal"));
         }, 1000);
+        location.reload();
     });
 }
 

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    const httpRequest = new HttpRequest("https://webapikanaban.somee.com/v1/");
+    const httpRequest = new HttpRequest("https://localhost:44396/v1/");
     const modal = new ProgressModal();
     const session = new Session("autenticated");
     let auth = session.getSession();
@@ -11,7 +11,7 @@ $(document).ready(function () {
             $(".sidebarManager").attr("hidden",false);
             $(".container-Manager").attr("hidden",false);          
         loadInfo(session,auth.role);
-        getCollaborators(httpRequest, modal);
+        getCollaborators(httpRequest, modal,session);
         loadCompanies(httpRequest);
         loadProject(httpRequest, modal,session);
         $("#btn-logout-manager").click(function () {
@@ -46,8 +46,10 @@ function loadInfo(session,role){
     }
     
 }
-function getCollaborators(httpRequest, modal) {
-    const promise1 = Promise.resolve(httpRequest.get("GET", "login/allUser", true));
+function getCollaborators(httpRequest, modal,session) {
+    let auth = session.getSession();
+    let user = JSON.stringify({"IdUserType": auth.idRole})
+    const promise1 = Promise.resolve(httpRequest.post("POST", "login/allUser",user, true));
     promise1.then((value) => {
         value.forEach(element => {
             var li = document.createElement('li');
@@ -147,13 +149,17 @@ function loadProject(httpRequest, modal,session) {
                 {
                     data: "startDate",
                     "render": function (data, type, row, meta) {
-                        return data;
+                        let now = new Date(data);
+                        var dateString = moment(now).format('DD-MM-YYYY');
+                        return dateString;
                     }
                 },
                 {
                     data: "deliveryDate",
                     "render": function (data, type, row, meta) {
-                        return data;
+                        let now = new Date(data);
+                        var dateString = moment(now).format('DD-MM-YYYY');
+                        return dateString;
                     }
                 },
                 {
