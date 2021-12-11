@@ -13,12 +13,12 @@ $(document).ready(function () {
         loadInfo(session,auth.role);
         getCollaborators(httpRequest, modal);
         loadCompanies(httpRequest);
-        loadProject(httpRequest, modal);
+        loadProject(httpRequest, modal,session);
         $("#btn-logout-manager").click(function () {
             session.removeSession();
         });
         $("#btn-add-project").click(function () {
-            registerProject(httpRequest, modal);
+            registerProject(httpRequest, modal,session);
         });
         }else{
             $(".sidebarEmployee").attr("hidden",false);
@@ -82,8 +82,8 @@ function loadCompanies(httpRequest) {
     });
 
 }
-function registerProject(httpRequest, modal) {
-    console.log("se ejecuta crear");
+function registerProject(httpRequest, modal,session) {
+    let auth = session.getSession();
     let form = document.getElementById("form-register-project");
     let Name = form.elements[1].value;
     let StartDate = form.elements[2].value;
@@ -96,7 +96,7 @@ function registerProject(httpRequest, modal) {
     users.forEach(element => {
         UsersOnProjectsTemps.push({ "IdUser": element});
     });
-    let project = JSON.stringify({ "Name": Name, "StartDate": StartDate, "DeliveryDate": DeliveryDate, "TotalAmount": TotalAmount, "Descripción": Descripción, "IdCompany": IdCompany, "UsersOnProjects": UsersOnProjectsTemps });
+    let project = JSON.stringify({ "Name": Name, "StartDate": StartDate, "DeliveryDate": DeliveryDate, "TotalAmount": TotalAmount, "Descripción": Descripción, "IdCompany": IdCompany, "UsersOnProjects": UsersOnProjectsTemps,"IdManager":auth.id});
     const promise1 = Promise.resolve(httpRequest.post("POST", "project/registerProject", project, true));
     promise1.then((value) => {
         new Toast({
@@ -109,8 +109,10 @@ function registerProject(httpRequest, modal) {
         }, 1000);
     });
 }
-function loadProject(httpRequest, modal) {
-    const promise1 = Promise.resolve(httpRequest.get("GET", "project/getAllProject", true));
+function loadProject(httpRequest, modal,session) {
+    let auth = session.getSession();
+    let project = JSON.stringify({ "IdManager":auth.id});
+    const promise1 = Promise.resolve(httpRequest.post("POST", "project/getAllProject",project, true));
     promise1.then((value) => {
         console.log(value);
         var table = $('#table-projects').DataTable({

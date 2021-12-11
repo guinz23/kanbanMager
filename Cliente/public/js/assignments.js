@@ -11,14 +11,14 @@ $(document).ready(function () {
             let id_project = this.value;
             loadUserOnProject(httpRequest, modal, id_project);
         });
-        loadProject(httpRequest, modal);
+        loadProject(httpRequest, modal,session);
         loadPriority(httpRequest, modal);
-        loadTtask(httpRequest, modal);
+        loadTtask(httpRequest, modal,session);
         $("#btn-logout").click(function () {
             session.removeSession();
         });
         $("#btn-add-assignments").click(function () {
-            registerTask(httpRequest, modal);
+            registerTask(httpRequest, modal,session);
         });
     }
 });
@@ -30,8 +30,10 @@ function loadInfo(session) {
     document.getElementById("card-role").innerText = "Rol: " + auth.role;
 
 }
-function loadProject(httpRequest, modal) {
-    const promise1 = Promise.resolve(httpRequest.get("GET", "project/getAllProject", true));
+function loadProject(httpRequest, modal,session) {
+    let auth = session.getSession();
+    let project = JSON.stringify({ "IdManager":auth.id});
+    const promise1 = Promise.resolve(httpRequest.post("POST", "project/getAllProject",project, true));
     promise1.then((value) => {
         var $mySelect = $('#id_projects');
         value.forEach(element => {
@@ -81,7 +83,8 @@ function loadPriority(httpRequest, modal) {
     }, 1000);
 }
 
-function registerTask(httpRequest, modal) {
+function registerTask(httpRequest, modal,session) {
+    let auth = session.getSession();
     let form = document.getElementById("form-register-assignments");
     let Name = form.elements[1].value;
     let StartDate = form.elements[2].value;
@@ -100,7 +103,8 @@ function registerTask(httpRequest, modal) {
         "IdUserAssigned": IdUserAssigned,
         "IdPriority": IdPriority,
         "IdProject": IdProject,
-        "State": "P"
+        "State": "P",
+        "IdManager":auth.id
     });
     const promise1 = Promise.resolve(httpRequest.post("POST", "task/registerTask", task, true));
     promise1.then((value) => {
@@ -115,8 +119,12 @@ function registerTask(httpRequest, modal) {
     });
 }
 
- function loadTtask(httpRequest,modal){
-    const promise1 = Promise.resolve(httpRequest.get("GET", "task/getAllTask", true));
+ function loadTtask(httpRequest,modal,session){
+    let auth = session.getSession();
+    let task = JSON.stringify({
+        "IdManager":auth.id
+    });
+    const promise1 = Promise.resolve(httpRequest.post("POST", "task/getAllTask",task,true));
     promise1.then((value) => {
         console.log(value);
         var table = $('#table-task').DataTable({

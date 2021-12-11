@@ -10,7 +10,7 @@ $(document).ready(function () {
             $(".sidebarManager").attr("hidden",false);
             $(".container-Manager").attr("hidden",false);
                 loadInfo(session,auth.role);
-                loadtaskbyState(httpRequest,modal);
+                loadtaskbyState(httpRequest,modal,session);
 
             $("#btn-logout-manager").click(function () {
                session.removeSession();
@@ -43,8 +43,12 @@ function loadInfo(session,role){
     }
     
 }
- function loadtaskbyState(httpRequest,modal){
-    const promise1 = Promise.resolve(httpRequest.get("GET", "task/taskByProject", true));
+ function loadtaskbyState(httpRequest,modal,session){
+    let auth = session.getSession();
+    let task = JSON.stringify({
+        "IdManager":auth.id
+    });
+    const promise1 = Promise.resolve(httpRequest.post("POST", "task/taskByProject",task,true));
     promise1.then((value) => {
        const becoming =  value.filter(task => task.stateProject == "P");
        const pending = value.filter(task => task.stateProject == "A");
