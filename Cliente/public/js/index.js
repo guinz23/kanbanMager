@@ -25,11 +25,21 @@ function login(httpRequest, modal, session) {
         let user = JSON.stringify({ "email": email, "password": password });
         const promise1 = Promise.resolve(httpRequest.post("POST", "login/authenticate", user,false));
         promise1.then((value) => {
-            session.setSession(value);
-            setTimeout(function () {
-                modal.hiddenModal($("#processing-modal"));
-                window.location.href = "home.html";
-            }, 1000);
+            if(value.email == null){
+                new Toast({
+                    message: 'Usuario y constraseña Incorrectos / O cuenta eliminada',
+                    type: 'danger'
+                });
+                setTimeout(function () {
+                    modal.hiddenModal($("#processing-modal"));
+                }, 1000);
+            }else{
+                session.setSession(value);
+                setTimeout(function () {
+                    modal.hiddenModal($("#processing-modal"));
+                    window.location.href = "home.html";
+                }, 1000);
+            }
         });
     }
 }       

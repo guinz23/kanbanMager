@@ -83,14 +83,14 @@ function loadPriority(httpRequest, modal) {
 
 function registerTask(httpRequest, modal) {
     let form = document.getElementById("form-register-assignments");
-    let Name = form.elements[0].value;
-    let StartDate = form.elements[1].value;
-    let DeliveryDate = form.elements[2].value;
-    let Amount = form.elements[3].value;
-    let IdPriority = form.elements[4].value;
-    let Description = form.elements[5].value;
-    let IdProject = form.elements[6].value;
-    let IdUserAssigned = form.elements[7].value;
+    let Name = form.elements[1].value;
+    let StartDate = form.elements[2].value;
+    let DeliveryDate = form.elements[3].value;
+    let Amount = form.elements[4].value;
+    let IdPriority = form.elements[5].value;
+    let Description = form.elements[6].value;
+    let IdProject = form.elements[7].value;
+    let IdUserAssigned = form.elements[8].value;
     let task = JSON.stringify({
         "Name": Name,
         "Description":Description,

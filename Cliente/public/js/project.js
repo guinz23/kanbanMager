@@ -85,12 +85,12 @@ function loadCompanies(httpRequest) {
 function registerProject(httpRequest, modal) {
     console.log("se ejecuta crear");
     let form = document.getElementById("form-register-project");
-    let Name = form.elements[0].value;
-    let StartDate = form.elements[1].value;
-    let DeliveryDate = form.elements[2].value;
-    let TotalAmount = form.elements[3].value;
-    let Descripción = form.elements[4].value;
-    let IdCompany = form.elements[5].value;
+    let Name = form.elements[1].value;
+    let StartDate = form.elements[2].value;
+    let DeliveryDate = form.elements[3].value;
+    let TotalAmount = form.elements[4].value;
+    let Descripción = form.elements[5].value;
+    let IdCompany = form.elements[6].value;
     var users = $("input[name='users[]']:checked").map(function(){return $(this).val();}).get();
     let UsersOnProjectsTemps = [];
     users.forEach(element => {
